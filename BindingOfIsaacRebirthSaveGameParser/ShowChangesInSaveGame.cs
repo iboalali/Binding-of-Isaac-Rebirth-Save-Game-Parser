@@ -18,7 +18,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
 
         Dictionary<int, string> info_Location_R;
-        public ShowChangesInSaveGame ( Dictionary<int, string> info_Location_R) {
+        public ShowChangesInSaveGame ( Dictionary<int, string> info_Location_R ) {
             InitializeComponent();
             this.info_Location_R = info_Location_R;
 
@@ -29,7 +29,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
                 LoadFile( ofd.FileName, ref old_File_Buffer );
-                btnLoadOldFile.Text += Environment.NewLine + ofd.SafeFileName;
+                btnLoadOldFile.Text = "Load Old File" + Environment.NewLine + ofd.SafeFileName;
                 ShowChanges();
             }
 
@@ -40,7 +40,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
                 LoadFile( ofd.FileName, ref new_File_Buffer );
-                btnLoadNewFile.Text += Environment.NewLine + ofd.SafeFileName;
+                btnLoadNewFile.Text = "Load New File" + Environment.NewLine + ofd.SafeFileName;
                 ShowChanges();
             }
         }
@@ -50,17 +50,32 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 return;
             }
 
+            int d = 0;
+
             StringBuilder result = new StringBuilder();
-            result.Append( "Loc  Old File    New File    is Known?" + Environment.NewLine );
+            result.Append( "Loc  Old File    New File    Difference (DEC)   is Known?" + Environment.NewLine );
 
             for ( int i = 0; i < old_File_Buffer.Length; i++ ) {
                 if ( old_File_Buffer[i] != new_File_Buffer[i] ) {
+
+                    d = new_File_Buffer[i] - old_File_Buffer[i];
+
                     result.Append( i.ToString( "X4" ) );
                     result.Append( " " );
                     result.Append( old_File_Buffer[i].ToString( "X2" ) );
                     result.Append( "       -> " );
                     result.Append( new_File_Buffer[i].ToString( "X2" ) );
-                    result.Append( "          " );
+
+                    if ( d < 0 ) {
+                        result.Append( "          " );
+
+                    } else {
+                        result.Append( "           " );
+
+                    }
+
+                    result.Append( d.ToString( "D8" ) );
+                    result.Append( "           " );
 
                     if ( info_Location_R.ContainsKey( i ) ) {
                         result.Append( "Yes (" + info_Location_R[i] + ")" );
@@ -100,7 +115,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             try {
                 LoadFile( s.First(), ref old_File_Buffer );
                 ShowChanges();
-                btnLoadOldFile.Text += Environment.NewLine + GetSafeFileName( s.First() );
+                btnLoadOldFile.Text = "Load Old File" + Environment.NewLine + GetSafeFileName( s.First() );
 
 
             } catch ( Exception ex ) {
@@ -114,7 +129,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             try {
                 LoadFile( s.First(), ref new_File_Buffer );
                 ShowChanges();
-                btnLoadNewFile.Text += Environment.NewLine + GetSafeFileName( s.First() );
+                btnLoadNewFile.Text = "Load New File" + Environment.NewLine + GetSafeFileName( s.First() );
 
 
             } catch ( Exception ex ) {
@@ -127,9 +142,6 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             return s.Last();
 
         }
-
-
-
 
 
 
