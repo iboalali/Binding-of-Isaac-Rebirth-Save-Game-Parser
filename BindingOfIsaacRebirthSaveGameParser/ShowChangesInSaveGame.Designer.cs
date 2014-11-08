@@ -76,7 +76,7 @@
             this.Controls.Add(this.richTextBox1);
             this.MinimumSize = new System.Drawing.Size(446, 390);
             this.Name = "ShowChangesInSaveGame";
-            this.Text = "Changes in Save Game";
+            this.Text = "Changes in the Save Game";
             this.ResumeLayout(false);
 
         }

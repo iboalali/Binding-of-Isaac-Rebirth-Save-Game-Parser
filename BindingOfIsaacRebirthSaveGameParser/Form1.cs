@@ -60,6 +60,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         private void Form1_Load ( object sender, EventArgs e ) {
 
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            this.Icon = global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101;
 
             LoadBinaryFile( completePath, ref this.buffer );
             ParseFile();
