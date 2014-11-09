@@ -28,7 +28,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             OpenFileDialog ofd = new OpenFileDialog();
 
             if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
-                LoadFile( ofd.FileName, ref old_File_Buffer );
+                LoadFile( ofd.FileName, out old_File_Buffer );
                 btnLoadOldFile.Text = "Load Old File" + Environment.NewLine + ofd.SafeFileName;
                 ShowChanges();
             }
@@ -39,7 +39,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             OpenFileDialog ofd = new OpenFileDialog();
 
             if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
-                LoadFile( ofd.FileName, ref new_File_Buffer );
+                LoadFile( ofd.FileName, out new_File_Buffer );
                 btnLoadNewFile.Text = "Load New File" + Environment.NewLine + ofd.SafeFileName;
                 ShowChanges();
             }
@@ -93,7 +93,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         }
 
-        private void LoadFile ( string path, ref byte[] buffer ) {
+        private void LoadFile ( string path, out byte[] buffer ) {
             using ( br = new BinaryReader( File.Open( path, FileMode.Open ) ) ) {
                 buffer = new byte[br.BaseStream.Length];
                 int r = br.Read( buffer, 0, buffer.Length );
@@ -113,7 +113,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             string[] s = ( string[] ) e.Data.GetData( DataFormats.FileDrop, false );
 
             try {
-                LoadFile( s.First(), ref old_File_Buffer );
+                LoadFile( s.First(), out old_File_Buffer );
                 ShowChanges();
                 btnLoadOldFile.Text = "Load Old File" + Environment.NewLine + GetSafeFileName( s.First() );
 
@@ -127,7 +127,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             string[] s = ( string[] ) e.Data.GetData( DataFormats.FileDrop, false );
 
             try {
-                LoadFile( s.First(), ref new_File_Buffer );
+                LoadFile( s.First(), out new_File_Buffer );
                 ShowChanges();
                 btnLoadNewFile.Text = "Load New File" + Environment.NewLine + GetSafeFileName( s.First() );
 

@@ -14,7 +14,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private byte[] buffer;
         private BinaryReader br;
-
+        //public static long SaveGameLength;
         /// <summary>
         /// The "My Documnet" folder path
         /// </summary>
@@ -62,7 +62,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
             this.Icon = global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101;
 
-            LoadBinaryFile( completePath, ref this.buffer );
+            LoadBinaryFile( completePath, out this.buffer );
             ParseFile();
 
         }
@@ -84,7 +84,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
 
-                LoadBinaryFile( ofd.FileName, ref this.buffer );
+                LoadBinaryFile( ofd.FileName, out this.buffer );
                 ParseFile();
             }
         }
@@ -94,8 +94,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         /// </summary>
         /// <param name="path">Path to the file</param>
         /// <param name="buffer">The byte array to fill</param>
-        private void LoadBinaryFile ( string path, ref byte[] buffer ) {
+        private void LoadBinaryFile ( string path, out byte[] buffer ) {
             using ( br = new BinaryReader( File.Open( path, FileMode.Open ) ) ) {
+                //SaveGameLength = br.BaseStream.Length;
                 buffer = new byte[br.BaseStream.Length];
                 int r = br.Read( buffer, 0, buffer.Length );
 
@@ -113,6 +114,10 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             lblDeaths.Text = this.buffer[info_Location["Deaths"]].ToString();
 
+        }
+
+        private void btnShowChangesRealTime_Click ( object sender, EventArgs e ) {
+            new ShowChanges_RealTime( Path.Combine( MyDocument_Path, SaveGameFile_Path ), File_Name ).Show();
         }
 
 

@@ -29,12 +29,13 @@
             this.btnOpenSaveGame = new System.Windows.Forms.Button();
             this.btnShowFile = new System.Windows.Forms.Button();
             this.btnShowChanges = new System.Windows.Forms.Button();
+            this.btnShowChangesRealTime = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(336, 36);
+            this.btnExit.Location = new System.Drawing.Point(336, 97);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 0;
@@ -61,7 +62,7 @@
             // btnOpenSaveGame
             // 
             this.btnOpenSaveGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenSaveGame.Location = new System.Drawing.Point(220, 36);
+            this.btnOpenSaveGame.Location = new System.Drawing.Point(220, 97);
             this.btnOpenSaveGame.Name = "btnOpenSaveGame";
             this.btnOpenSaveGame.Size = new System.Drawing.Size(110, 23);
             this.btnOpenSaveGame.TabIndex = 3;
@@ -72,7 +73,7 @@
             // btnShowFile
             // 
             this.btnShowFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowFile.Location = new System.Drawing.Point(139, 36);
+            this.btnShowFile.Location = new System.Drawing.Point(334, 68);
             this.btnShowFile.Name = "btnShowFile";
             this.btnShowFile.Size = new System.Drawing.Size(75, 23);
             this.btnShowFile.TabIndex = 4;
@@ -83,19 +84,31 @@
             // btnShowChanges
             // 
             this.btnShowChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowChanges.Location = new System.Drawing.Point(15, 36);
+            this.btnShowChanges.Location = new System.Drawing.Point(220, 68);
             this.btnShowChanges.Name = "btnShowChanges";
-            this.btnShowChanges.Size = new System.Drawing.Size(118, 23);
+            this.btnShowChanges.Size = new System.Drawing.Size(108, 23);
             this.btnShowChanges.TabIndex = 5;
             this.btnShowChanges.Text = "Show Changes";
             this.btnShowChanges.UseVisualStyleBackColor = true;
             this.btnShowChanges.Click += new System.EventHandler(this.btnShowChanges_Click);
             // 
+            // btnShowChangesRealTime
+            // 
+            this.btnShowChangesRealTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShowChangesRealTime.Location = new System.Drawing.Point(53, 97);
+            this.btnShowChangesRealTime.Name = "btnShowChangesRealTime";
+            this.btnShowChangesRealTime.Size = new System.Drawing.Size(161, 23);
+            this.btnShowChangesRealTime.TabIndex = 6;
+            this.btnShowChangesRealTime.Text = "Show Changes in Real Time";
+            this.btnShowChangesRealTime.UseVisualStyleBackColor = true;
+            this.btnShowChangesRealTime.Click += new System.EventHandler(this.btnShowChangesRealTime_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 71);
+            this.ClientSize = new System.Drawing.Size(421, 132);
+            this.Controls.Add(this.btnShowChangesRealTime);
             this.Controls.Add(this.btnShowChanges);
             this.Controls.Add(this.btnShowFile);
             this.Controls.Add(this.btnOpenSaveGame);
@@ -119,6 +132,7 @@
         private System.Windows.Forms.Button btnOpenSaveGame;
         private System.Windows.Forms.Button btnShowFile;
         private System.Windows.Forms.Button btnShowChanges;
+        private System.Windows.Forms.Button btnShowChangesRealTime;
     }
 }
 
