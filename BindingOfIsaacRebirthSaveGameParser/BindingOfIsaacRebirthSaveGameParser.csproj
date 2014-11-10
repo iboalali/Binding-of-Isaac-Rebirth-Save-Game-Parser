@@ -59,6 +59,12 @@
     <Compile Include="Indecies_Form.Designer.cs">
       <DependentUpon>Indecies_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="LocationToTrack_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocationToTrack_Form.Designer.cs">
+      <DependentUpon>LocationToTrack_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveFileHex.cs">
@@ -67,6 +73,7 @@
     <Compile Include="SaveFileHex.Designer.cs">
       <DependentUpon>SaveFileHex.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingManager.cs" />
     <Compile Include="ShowChangesInSaveGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,11 +86,20 @@
     <Compile Include="ShowChanges_RealTime.Designer.cs">
       <DependentUpon>ShowChanges_RealTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="SnapShotTimeLine_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnapShotTimeLine_Form.Designer.cs">
+      <DependentUpon>SnapShotTimeLine_Form.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Indecies_Form.resx">
       <DependentUpon>Indecies_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocationToTrack_Form.resx">
+      <DependentUpon>LocationToTrack_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -103,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShowChanges_RealTime.resx">
       <DependentUpon>ShowChanges_RealTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SnapShotTimeLine_Form.resx">
+      <DependentUpon>SnapShotTimeLine_Form.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
