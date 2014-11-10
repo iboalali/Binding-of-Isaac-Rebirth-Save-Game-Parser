@@ -73,7 +73,7 @@
             // btnShowFile
             // 
             this.btnShowFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowFile.Location = new System.Drawing.Point(334, 68);
+            this.btnShowFile.Location = new System.Drawing.Point(336, 68);
             this.btnShowFile.Name = "btnShowFile";
             this.btnShowFile.Size = new System.Drawing.Size(75, 23);
             this.btnShowFile.TabIndex = 4;
@@ -86,7 +86,7 @@
             this.btnShowChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnShowChanges.Location = new System.Drawing.Point(220, 68);
             this.btnShowChanges.Name = "btnShowChanges";
-            this.btnShowChanges.Size = new System.Drawing.Size(108, 23);
+            this.btnShowChanges.Size = new System.Drawing.Size(110, 23);
             this.btnShowChanges.TabIndex = 5;
             this.btnShowChanges.Text = "Show Changes";
             this.btnShowChanges.UseVisualStyleBackColor = true;
