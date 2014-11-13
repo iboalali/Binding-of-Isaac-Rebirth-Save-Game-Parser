@@ -91,7 +91,24 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         private void Form1_Load ( object sender, EventArgs e ) {
 
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
-            this.Icon = global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101;
+            Bitmap bIcon = Bitmap.FromHicon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101.Handle );
+            Color c;
+            for ( int i = 0; i < bIcon.Width; i++ ) {
+                for ( int j = 0; j < bIcon.Height; j++ ) {
+                    c = bIcon.GetPixel( i, j );
+                    bIcon.SetPixel( i, j,
+                        Color.FromArgb(
+                            c.A,
+                            ( int ) ( c.R * 0.8 ),
+                            ( int ) ( c.G * 0.8 ),
+                            ( int ) ( c.B * 0.8 )
+
+                        )
+                    );
+                }
+            }
+
+            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
 
             LoadBinaryFile( completePath, out this.buffer );
             ParseFile();

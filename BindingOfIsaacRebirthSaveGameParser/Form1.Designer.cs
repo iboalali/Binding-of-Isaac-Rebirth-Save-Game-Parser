@@ -120,12 +120,12 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "";
+            this.columnHeader1.Text = "Name";
             this.columnHeader1.Width = 300;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "";
+            this.columnHeader2.Text = "Value";
             this.columnHeader2.Width = 80;
             // 
             // menuStrip1
@@ -242,7 +242,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -258,9 +258,7 @@
             this.Controls.Add(this.btnOpenSaveGame);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(432, 333);
             this.Name = "Form1";
             this.Text = "Binding of Isaac Rebirt Save Game Parser";
