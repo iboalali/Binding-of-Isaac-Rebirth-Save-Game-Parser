@@ -29,15 +29,18 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         /// Default file name for the first save game file
         /// </summary>
         private string File_Name = "persistentgamedata1.dat";
+        private string C_Path = string.Empty;
 
         /// <summary>
         /// Known location of the statistics
         /// Key: Name, Value: Location (in decimel)
         /// </summary>
-        private Dictionary<string, int> info_Location
+        public static Dictionary<string, int> info_Location
             = new Dictionary<string, int>() 
                         { 
-                            { "Deaths", 259 } 
+                            { "Deaths", 259 }, 
+                            { "Rocks", 231 },
+                            { "Poop", 239 },
                             // ...
                         };
 
@@ -45,10 +48,12 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         /// Known location of the statistics
         /// Key: Location (in decimel), Value: Name
         /// </summary>
-        private Dictionary<int, string> info_Location_R
+        public static Dictionary<int, string> info_Location_R
             = new Dictionary<int, string>() 
                         { 
-                            { 259, "Deaths" } 
+                            { 259, "Deaths" },
+                            { 231, "Rocks" },
+                            { 239, "Poop" },
                             // ...
                         };
 
@@ -85,6 +90,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
 
                 LoadBinaryFile( ofd.FileName, out this.buffer );
+                File_Name = ofd.SafeFileName;
+                C_Path = ofd.FileName.Substring( 0, ofd.FileName.LastIndexOf( '\\' ) );
+
                 ParseFile();
             }
         }
@@ -117,7 +125,12 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         }
 
         private void btnShowChangesRealTime_Click ( object sender, EventArgs e ) {
-            new ShowChanges_RealTime( Path.Combine( MyDocument_Path, SaveGameFile_Path ), File_Name ).Show();
+            if ( C_Path == string.Empty ) {
+                new ShowChanges_RealTime( Path.Combine( MyDocument_Path, SaveGameFile_Path ), File_Name ).Show();
+            } else {
+                new ShowChanges_RealTime( C_Path, File_Name ).Show();
+
+            }
         }
 
 

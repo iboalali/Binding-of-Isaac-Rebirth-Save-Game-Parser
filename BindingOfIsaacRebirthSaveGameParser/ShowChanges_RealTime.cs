@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,6 +29,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         private BinaryReader br;
         private bool recordingStarted;
         private byte[] firstSnapShot;
+        private bool didSomethingChange;
 
 
         public ShowChanges_RealTime ( string path, string fileName ) {
@@ -36,6 +38,8 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             this.Path = path;
             this.FileName = fileName;
             this.SaveGame_OverTime = new List<SaveGameSnapShot>();
+            this.didSomethingChange = false;
+
             SaveGameSnapShot.Counter = 0;
             recordingStarted = false;
 
@@ -60,6 +64,15 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                     sgss.SnapShot = snapshot;
                     SaveGame_OverTime.Add( sgss );
 
+                    SetControlPropertyThreadSafe( lblCounter, "Text", SaveGameSnapShot.Counter.ToString() );
+
+                    ShowChanges();
+                    break;
+                    // Delete from the begining if it gets too large
+                    //if ( SaveGame_OverTime.Count >= 50000 ) {
+                    //    
+                    //}
+
                 } catch ( IOException ) {
                     continue;
 
@@ -76,6 +89,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             sgss.SnapShot = firstSnapShot;
             SaveGame_OverTime.Add( sgss );
 
+            lblCounter.Text = SaveGameSnapShot.Counter.ToString();
+            lblSnapShot1.Text = DateTime.Now.ToString();
+
             watcher.EnableRaisingEvents = true;
             recordingStarted = true;
         }
@@ -85,6 +101,12 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             if ( recordingStarted ) {
                 recordingStarted = false;
+
+                if ( SaveGame_OverTime.Count < 2 ) {
+                    MessageBox.Show( "You need more than two snapshots.", "Too Few Snapshots" );
+                    return;
+
+                }
                 new SnapShotTimeLine_Form( SaveGame_OverTime ).Show();
 
             }
@@ -99,7 +121,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         }
 
-        private void ShowChanges ( SaveGameSnapShot sgss ) {
+        private void ShowChanges () {
             if ( firstSnapShot == null || SaveGame_OverTime.Count < 1 ) {
                 return;
 
@@ -108,13 +130,17 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             StringBuilder result = new StringBuilder();
             if ( SaveGame_OverTime.Count == 1 ) {
                 for ( int i = 0; i < firstSnapShot.Length; i++ ) {
-                    lblSnapShot1.Text = SaveGame_OverTime.Last().Date.ToString();
-                    lblCounter.Text = SaveGame_OverTime.Last().Index.ToString();
+                    SetControlPropertyThreadSafe( lblSnapShot1, "Text", SaveGame_OverTime.Last().Date.ToString() );
 
                     if ( firstSnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] ) {
-                        //result.Append( i.ToString( "X4" ) + "\t\t" + SaveGame_OverTime.Last().SnapShot[i].ToString() );
+                        result.Append( i.ToString( "X4" ) + "\t\t" + SaveGame_OverTime.Last().SnapShot[i].ToString() );
+                        result.Append( "\t\t" );
+                        if ( Form1.info_Location_R.ContainsKey(i) ) {
+                            result.Append( Form1.info_Location_R[i] );
 
-
+                        }
+                        result.Append( Environment.NewLine );
+                        didSomethingChange = true;
 
                     }
                 }
@@ -122,14 +148,34 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
 
             } else {
+                for ( int i = 0; i < firstSnapShot.Length; i++ ) {
+                    SetControlPropertyThreadSafe(lblSnapShot1, "Text", SaveGame_OverTime.Last().Date.ToString());
 
+                    if ( SaveGame_OverTime[SaveGame_OverTime.Count - 2].SnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] ) {
+                        result.Append( i.ToString( "X4" ) + "\t\t" + SaveGame_OverTime.Last().SnapShot[i].ToString() );
+                        result.Append( "\t\t" );
+                        if ( Form1.info_Location_R.ContainsKey( i ) ) {
+                            result.Append( Form1.info_Location_R[i] );
+
+                        }
+                        result.Append( Environment.NewLine );
+                        didSomethingChange = true;
+
+                    }
+                }
 
 
 
             }
 
+            if ( !didSomethingChange ) {
+                SaveGame_OverTime.RemoveAt( SaveGame_OverTime.Count - 1 );
 
+            } else {
+                SetControlPropertyThreadSafe( rtbChanges, "Text", result.ToString() );
 
+            }
+            didSomethingChange = false;
 
         }
 
@@ -138,6 +184,16 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         }
 
 
+
+        private delegate void SetControlPropertyThreadSafeDelegate ( Control control, string propertyName, object propertyValue );
+
+        public static void SetControlPropertyThreadSafe ( Control control, string propertyName, object propertyValue ) {
+            if ( control.InvokeRequired ) {
+                control.Invoke( new SetControlPropertyThreadSafeDelegate( SetControlPropertyThreadSafe ), new object[] { control, propertyName, propertyValue } );
+            } else {
+                control.GetType().InvokeMember( propertyName, BindingFlags.SetProperty, null, control, new object[] { propertyValue } );
+            }
+        }
 
 
 
