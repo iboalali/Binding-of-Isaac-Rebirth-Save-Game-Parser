@@ -170,6 +170,8 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             if ( !didSomethingChange ) {
                 SaveGame_OverTime.RemoveAt( SaveGame_OverTime.Count - 1 );
+                SaveGameSnapShot.Counter--;
+                SetControlPropertyThreadSafe( lblCounter, "Text", SaveGameSnapShot.Counter.ToString() );
 
             } else {
                 SetControlPropertyThreadSafe( rtbChanges, "Text", result.ToString() );

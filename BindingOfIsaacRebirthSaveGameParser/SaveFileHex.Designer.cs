@@ -121,6 +121,7 @@
             // btnBeyondTheByteSearch
             // 
             this.btnBeyondTheByteSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBeyondTheByteSearch.Enabled = false;
             this.btnBeyondTheByteSearch.Location = new System.Drawing.Point(385, 6);
             this.btnBeyondTheByteSearch.Name = "btnBeyondTheByteSearch";
             this.btnBeyondTheByteSearch.Size = new System.Drawing.Size(27, 23);

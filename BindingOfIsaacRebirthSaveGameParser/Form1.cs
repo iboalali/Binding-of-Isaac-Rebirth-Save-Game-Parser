@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,6 +30,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         /// Default file name for the first save game file
         /// </summary>
         private string File_Name = "persistentgamedata1.dat";
+        private string SaveGame_FileName1 = "persistentgamedata1.dat";
+        private string SaveGame_FileName2 = "persistentgamedata2.dat";
+        private string SaveGame_FileName3 = "persistentgamedata3.dat";
         private string C_Path = string.Empty;
 
         /// <summary>
@@ -57,9 +61,31 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                             // ...
                         };
 
+        private FileSystemWatcher watcher;
+
+
         public Form1 () {
             InitializeComponent();
+            watcher = new FileSystemWatcher();
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            watcher.Filter = File_Name;
+            watcher.Path = Path.Combine( MyDocument_Path, SaveGameFile_Path );
+            watcher.Changed += watcher_Changed;
 
+        }
+
+        void watcher_Changed ( object sender, FileSystemEventArgs e ) {
+            while ( true ) {
+                try {
+                    LoadBinaryFile( Path.Combine( MyDocument_Path, SaveGameFile_Path ) + '\\' + File_Name, out this.buffer );
+                    ParseFile_ThreadSafe();
+                    break;
+
+                } catch ( IOException ) {
+                    continue;
+
+                }
+            }
         }
 
         private void Form1_Load ( object sender, EventArgs e ) {
@@ -93,6 +119,11 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 File_Name = ofd.SafeFileName;
                 C_Path = ofd.FileName.Substring( 0, ofd.FileName.LastIndexOf( '\\' ) );
 
+                watcher.EnableRaisingEvents = false;
+                watcher.Filter = ofd.SafeFileName;
+                watcher.Path = C_Path;
+                watcher.EnableRaisingEvents = true;
+
                 ParseFile();
             }
         }
@@ -120,7 +151,44 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 return;
             }
 
-            lblDeaths.Text = this.buffer[info_Location["Deaths"]].ToString();
+            listView.Items.Clear();
+
+            foreach ( var item in info_Location_R ) {
+                listView.Items.Add(
+                    new ListViewItem(
+                        new string[]{
+                            item.Value,
+                            this.buffer[item.Key].ToString()
+                        }
+                    )
+               );
+
+            }
+
+        }
+
+        /// <summary>
+        /// Extract using the known location of the information
+        /// </summary>
+        private void ParseFile_ThreadSafe () {
+            if ( this.buffer == null ) {
+                return;
+            }
+
+            List<string[]> lvi = new List<string[]>();
+            ClearValuesFromListViewThreadSafe( listView );
+
+            foreach ( var item in info_Location_R ) {
+                lvi.Add(
+                    new string[]{
+                        item.Value,
+                        this.buffer[item.Key].ToString()
+                    }
+                );
+
+            }
+
+            SetValuesForListViewThreadSafe( listView, lvi );
 
         }
 
@@ -130,6 +198,95 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             } else {
                 new ShowChanges_RealTime( C_Path, File_Name ).Show();
 
+            }
+        }
+
+        private void saveGame1ToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            File_Name = SaveGame_FileName1;
+            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            LoadBinaryFile( completePath, out this.buffer );
+
+            watcher.EnableRaisingEvents = false;
+            watcher.Filter = File_Name;
+            watcher.EnableRaisingEvents = true;
+
+            ParseFile();
+
+        }
+
+        private void saveGame2ToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            File_Name = SaveGame_FileName2;
+            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            LoadBinaryFile( completePath, out this.buffer );
+
+            watcher.EnableRaisingEvents = false;
+            watcher.Filter = File_Name;
+            watcher.EnableRaisingEvents = true;
+
+            ParseFile();
+
+        }
+
+        private void saveGame3ToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            File_Name = SaveGame_FileName3;
+            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            LoadBinaryFile( completePath, out this.buffer );
+
+            watcher.EnableRaisingEvents = false;
+            watcher.Filter = File_Name;
+            watcher.EnableRaisingEvents = true;
+
+            ParseFile();
+
+        }
+
+        private void aboutToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            new About_Form().Show();
+
+        }
+
+        private void exitToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            Environment.Exit( Environment.ExitCode );
+
+        }
+
+        private delegate void SetControlPropertyThreadSafeDelegate ( Control control, string propertyName, object propertyValue );
+
+        public static void SetControlPropertyThreadSafe ( Control control, string propertyName, object propertyValue ) {
+            if ( control.InvokeRequired ) {
+                control.Invoke( new SetControlPropertyThreadSafeDelegate( SetControlPropertyThreadSafe ), new object[] { control, propertyName, propertyValue } );
+            } else {
+                control.GetType().InvokeMember( propertyName, BindingFlags.SetProperty, null, control, new object[] { propertyValue } );
+            }
+        }
+
+        private delegate void SetValuesForListViewThreadSafeDelegate ( ListView control, List<string[]> values );
+
+        public static void SetValuesForListViewThreadSafe ( ListView control, List<string[]> values ) {
+            if ( control.InvokeRequired ) {
+                control.Invoke( new SetValuesForListViewThreadSafeDelegate( SetValuesForListViewThreadSafe ), new object[] { control, values } );
+
+            } else {
+                foreach ( var item in values ) {
+                    control.Items.Add(
+                        new ListViewItem(
+                            item
+                        )
+                    );
+
+                }
+
+            }
+        }
+
+        private delegate void ClearValuesFromListViewThreadSafeDelegate ( ListView control );
+
+        public static void ClearValuesFromListViewThreadSafe ( ListView control ) {
+            if ( control.InvokeRequired ) {
+                control.Invoke( new ClearValuesFromListViewThreadSafeDelegate( ClearValuesFromListViewThreadSafe ), new object[] { control } );
+
+            } else {
+                control.Items.Clear();
             }
         }
 
