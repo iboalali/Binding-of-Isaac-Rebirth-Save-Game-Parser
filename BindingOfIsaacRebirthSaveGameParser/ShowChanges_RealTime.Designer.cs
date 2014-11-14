@@ -70,7 +70,7 @@
             this.rtbChanges.Font = new System.Drawing.Font("Courier New", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbChanges.Location = new System.Drawing.Point(12, 74);
             this.rtbChanges.Name = "rtbChanges";
-            this.rtbChanges.Size = new System.Drawing.Size(394, 229);
+            this.rtbChanges.Size = new System.Drawing.Size(673, 229);
             this.rtbChanges.TabIndex = 4;
             this.rtbChanges.Text = "";
             // 
@@ -86,7 +86,7 @@
             // lblCounter
             // 
             this.lblCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCounter.Location = new System.Drawing.Point(316, 52);
+            this.lblCounter.Location = new System.Drawing.Point(595, 52);
             this.lblCounter.Name = "lblCounter";
             this.lblCounter.Size = new System.Drawing.Size(90, 19);
             this.lblCounter.TabIndex = 6;
@@ -95,19 +95,21 @@
             // 
             // btnLocationToTrack
             // 
+            this.btnLocationToTrack.Enabled = false;
             this.btnLocationToTrack.Location = new System.Drawing.Point(174, 12);
             this.btnLocationToTrack.Name = "btnLocationToTrack";
             this.btnLocationToTrack.Size = new System.Drawing.Size(180, 23);
             this.btnLocationToTrack.TabIndex = 7;
             this.btnLocationToTrack.Text = "Add Location To Track";
             this.btnLocationToTrack.UseVisualStyleBackColor = true;
+            this.btnLocationToTrack.Visible = false;
             this.btnLocationToTrack.Click += new System.EventHandler(this.btnLocationToTrack_Click);
             // 
             // ShowChanges_RealTime
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 315);
+            this.ClientSize = new System.Drawing.Size(697, 315);
             this.Controls.Add(this.btnLocationToTrack);
             this.Controls.Add(this.lblCounter);
             this.Controls.Add(this.panel1);
@@ -115,9 +117,10 @@
             this.Controls.Add(this.lblSnapShot1);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
-            this.MinimumSize = new System.Drawing.Size(434, 354);
+            this.MinimumSize = new System.Drawing.Size(713, 354);
             this.Name = "ShowChanges_RealTime";
             this.Text = "ShowChanges_RealTime";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ShowChanges_RealTime_FormClosing);
             this.ResumeLayout(false);
 
         }

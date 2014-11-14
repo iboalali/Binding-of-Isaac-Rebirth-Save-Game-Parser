@@ -15,7 +15,6 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private byte[] buffer;
         private BinaryReader br;
-        //public static long SaveGameLength;
         /// <summary>
         /// The "My Documnet" folder path
         /// </summary>
@@ -29,46 +28,20 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         /// <summary>
         /// Default file name for the first save game file
         /// </summary>
-        private string File_Name = "persistentgamedata1.dat";
+        private string CurrentFileName = "persistentgamedata1.dat";
         private string SaveGame_FileName1 = "persistentgamedata1.dat";
         private string SaveGame_FileName2 = "persistentgamedata2.dat";
         private string SaveGame_FileName3 = "persistentgamedata3.dat";
         private string C_Path = string.Empty;
 
-        /// <summary>
-        /// Known location of the statistics
-        /// Key: Name, Value: Location (in decimel)
-        /// </summary>
-        public static Dictionary<string, int> info_Location
-            = new Dictionary<string, int>() 
-                        { 
-                            { "Deaths", 259 }, 
-                            { "Rocks", 231 },
-                            { "Poop", 239 },
-                            // ...
-                        };
-
-        /// <summary>
-        /// Known location of the statistics
-        /// Key: Location (in decimel), Value: Name
-        /// </summary>
-        public static Dictionary<int, string> info_Location_R
-            = new Dictionary<int, string>() 
-                        { 
-                            { 259, "Deaths" },
-                            { 231, "Rocks" },
-                            { 239, "Poop" },
-                            // ...
-                        };
-
         private FileSystemWatcher watcher;
-
 
         public Form1 () {
             InitializeComponent();
+
             watcher = new FileSystemWatcher();
             watcher.NotifyFilter = NotifyFilters.LastWrite;
-            watcher.Filter = File_Name;
+            watcher.Filter = CurrentFileName;
             watcher.Path = Path.Combine( MyDocument_Path, SaveGameFile_Path );
             watcher.Changed += watcher_Changed;
 
@@ -77,7 +50,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         void watcher_Changed ( object sender, FileSystemEventArgs e ) {
             while ( true ) {
                 try {
-                    LoadBinaryFile( Path.Combine( MyDocument_Path, SaveGameFile_Path ) + '\\' + File_Name, out this.buffer );
+                    LoadBinaryFile( Path.Combine( MyDocument_Path, SaveGameFile_Path ) + '\\' + CurrentFileName, out this.buffer );
                     ParseFile_ThreadSafe();
                     break;
 
@@ -90,7 +63,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private void Form1_Load ( object sender, EventArgs e ) {
 
-            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             Bitmap bIcon = Bitmap.FromHicon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101.Handle );
             Color c;
             for ( int i = 0; i < bIcon.Width; i++ ) {
@@ -110,8 +83,11 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             this.Icon = Icon.FromHandle( bIcon.GetHicon() );
 
+
+
             LoadBinaryFile( completePath, out this.buffer );
             ParseFile();
+            watcher.EnableRaisingEvents = true;
 
         }
 
@@ -124,7 +100,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         }
 
         private void btnShowChanges_Click ( object sender, EventArgs e ) {
-            new ShowChangesInSaveGame( info_Location_R ).Show();
+            new ShowChangesInSaveGame().Show();
         }
 
         private void btnOpenSaveGame_Click ( object sender, EventArgs e ) {
@@ -133,7 +109,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
 
                 LoadBinaryFile( ofd.FileName, out this.buffer );
-                File_Name = ofd.SafeFileName;
+                CurrentFileName = ofd.SafeFileName;
                 C_Path = ofd.FileName.Substring( 0, ofd.FileName.LastIndexOf( '\\' ) );
 
                 watcher.EnableRaisingEvents = false;
@@ -170,12 +146,12 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             listView.Items.Clear();
 
-            foreach ( var item in info_Location_R ) {
+            foreach ( var item in StatLocation.locations ) {
                 listView.Items.Add(
                     new ListViewItem(
                         new string[]{
-                            item.Value,
-                            this.buffer[item.Key].ToString()
+                            item.Name,
+                            StatLocation.GetValueFromSaveGame( this.buffer, item.From, item.To ).ToString()
                         }
                     )
                );
@@ -195,11 +171,11 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             List<string[]> lvi = new List<string[]>();
             ClearValuesFromListViewThreadSafe( listView );
 
-            foreach ( var item in info_Location_R ) {
+            foreach ( var item in StatLocation.locations ) {
                 lvi.Add(
                     new string[]{
-                        item.Value,
-                        this.buffer[item.Key].ToString()
+                        item.Name,
+                        StatLocation.GetValueFromSaveGame( this.buffer, item.From, item.To ).ToString()
                     }
                 );
 
@@ -211,20 +187,20 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private void btnShowChangesRealTime_Click ( object sender, EventArgs e ) {
             if ( C_Path == string.Empty ) {
-                new ShowChanges_RealTime( Path.Combine( MyDocument_Path, SaveGameFile_Path ), File_Name ).Show();
+                new ShowChanges_RealTime( Path.Combine( MyDocument_Path, SaveGameFile_Path ), CurrentFileName ).Show();
             } else {
-                new ShowChanges_RealTime( C_Path, File_Name ).Show();
+                new ShowChanges_RealTime( C_Path, CurrentFileName ).Show();
 
             }
         }
 
         private void saveGame1ToolStripMenuItem_Click ( object sender, EventArgs e ) {
-            File_Name = SaveGame_FileName1;
-            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            CurrentFileName = SaveGame_FileName1;
+            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 
             watcher.EnableRaisingEvents = false;
-            watcher.Filter = File_Name;
+            watcher.Filter = CurrentFileName;
             watcher.EnableRaisingEvents = true;
 
             ParseFile();
@@ -232,12 +208,12 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         }
 
         private void saveGame2ToolStripMenuItem_Click ( object sender, EventArgs e ) {
-            File_Name = SaveGame_FileName2;
-            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            CurrentFileName = SaveGame_FileName2;
+            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 
             watcher.EnableRaisingEvents = false;
-            watcher.Filter = File_Name;
+            watcher.Filter = CurrentFileName;
             watcher.EnableRaisingEvents = true;
 
             ParseFile();
@@ -245,12 +221,12 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         }
 
         private void saveGame3ToolStripMenuItem_Click ( object sender, EventArgs e ) {
-            File_Name = SaveGame_FileName3;
-            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + File_Name;
+            CurrentFileName = SaveGame_FileName3;
+            string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 
             watcher.EnableRaisingEvents = false;
-            watcher.Filter = File_Name;
+            watcher.Filter = CurrentFileName;
             watcher.EnableRaisingEvents = true;
 
             ParseFile();
@@ -305,6 +281,11 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             } else {
                 control.Items.Clear();
             }
+        }
+
+        private void Form1_FormClosing ( object sender, FormClosingEventArgs e ) {
+            watcher.EnableRaisingEvents = false;
+
         }
 
 

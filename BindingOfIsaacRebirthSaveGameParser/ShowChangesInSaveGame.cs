@@ -17,10 +17,8 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         public BinaryReader br;
 
 
-        Dictionary<int, string> info_Location_R;
-        public ShowChangesInSaveGame ( Dictionary<int, string> info_Location_R ) {
+        public ShowChangesInSaveGame () {
             InitializeComponent();
-            this.info_Location_R = info_Location_R;
 
         }
 
@@ -48,6 +46,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         private void ShowChanges () {
             if ( old_File_Buffer == null || new_File_Buffer == null ) {
                 return;
+
             }
 
             int d = 0;
@@ -77,8 +76,8 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                     result.Append( d.ToString( "D8" ) );
                     result.Append( "           " );
 
-                    if ( info_Location_R.ContainsKey( i ) ) {
-                        result.Append( "Yes (" + info_Location_R[i] + ")" );
+                    if ( StatLocation.ContainsLocation( i ) ) {
+                        result.Append( "Yes (" + StatLocation.GetLocation_Name( i ) + ")" );
 
                     } else {
                         result.Append( "No" );

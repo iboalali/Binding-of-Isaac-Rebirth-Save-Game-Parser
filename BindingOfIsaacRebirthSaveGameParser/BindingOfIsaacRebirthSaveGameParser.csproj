@@ -98,6 +98,7 @@
     <Compile Include="SnapShotTimeLine_Form.Designer.cs">
       <DependentUpon>SnapShotTimeLine_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="StatLocation.cs" />
     <EmbeddedResource Include="About_Form.resx">
       <DependentUpon>About_Form.cs</DependentUpon>
     </EmbeddedResource>

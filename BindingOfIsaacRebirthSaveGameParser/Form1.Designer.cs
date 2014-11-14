@@ -51,7 +51,7 @@
             // btnExit
             // 
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.Location = new System.Drawing.Point(325, 257);
+            this.btnExit.Location = new System.Drawing.Point(360, 305);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 0;
@@ -62,7 +62,7 @@
             // btnOpenSaveGame
             // 
             this.btnOpenSaveGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenSaveGame.Location = new System.Drawing.Point(209, 257);
+            this.btnOpenSaveGame.Location = new System.Drawing.Point(244, 305);
             this.btnOpenSaveGame.Name = "btnOpenSaveGame";
             this.btnOpenSaveGame.Size = new System.Drawing.Size(110, 23);
             this.btnOpenSaveGame.TabIndex = 3;
@@ -73,7 +73,7 @@
             // btnShowFile
             // 
             this.btnShowFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowFile.Location = new System.Drawing.Point(325, 228);
+            this.btnShowFile.Location = new System.Drawing.Point(360, 276);
             this.btnShowFile.Name = "btnShowFile";
             this.btnShowFile.Size = new System.Drawing.Size(75, 23);
             this.btnShowFile.TabIndex = 4;
@@ -84,7 +84,7 @@
             // btnShowChanges
             // 
             this.btnShowChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowChanges.Location = new System.Drawing.Point(209, 228);
+            this.btnShowChanges.Location = new System.Drawing.Point(244, 276);
             this.btnShowChanges.Name = "btnShowChanges";
             this.btnShowChanges.Size = new System.Drawing.Size(110, 23);
             this.btnShowChanges.TabIndex = 5;
@@ -95,7 +95,7 @@
             // btnShowChangesRealTime
             // 
             this.btnShowChangesRealTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowChangesRealTime.Location = new System.Drawing.Point(42, 257);
+            this.btnShowChangesRealTime.Location = new System.Drawing.Point(77, 305);
             this.btnShowChangesRealTime.Name = "btnShowChangesRealTime";
             this.btnShowChangesRealTime.Size = new System.Drawing.Size(161, 23);
             this.btnShowChangesRealTime.TabIndex = 6;
@@ -113,7 +113,7 @@
             this.columnHeader2});
             this.listView.Location = new System.Drawing.Point(15, 27);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(389, 253);
+            this.listView.Size = new System.Drawing.Size(424, 301);
             this.listView.TabIndex = 7;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -137,7 +137,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(416, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(451, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -242,7 +242,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -250,7 +250,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 294);
+            this.ClientSize = new System.Drawing.Size(451, 342);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.btnShowChangesRealTime);
             this.Controls.Add(this.btnShowChanges);
@@ -259,9 +259,10 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(432, 333);
+            this.MinimumSize = new System.Drawing.Size(467, 381);
             this.Name = "Form1";
-            this.Text = "Binding of Isaac Rebirt Save Game Parser";
+            this.Text = "The Binding of Isaac: Rebirt Save Game Parser";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -135,8 +135,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                     if ( firstSnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] ) {
                         result.Append( i.ToString( "X4" ) + "\t\t" + SaveGame_OverTime.Last().SnapShot[i].ToString() );
                         result.Append( "\t\t" );
-                        if ( Form1.info_Location_R.ContainsKey(i) ) {
-                            result.Append( Form1.info_Location_R[i] );
+                        if ( StatLocation.ContainsLocation( i ) ) {
+                            result.Append( StatLocation.GetLocation_Name( i ) );
+                            i += StatLocation.GetNumberOfByteMinusOne( i );
 
                         }
                         result.Append( Environment.NewLine );
@@ -149,13 +150,14 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             } else {
                 for ( int i = 0; i < firstSnapShot.Length; i++ ) {
-                    SetControlPropertyThreadSafe(lblSnapShot1, "Text", SaveGame_OverTime.Last().Date.ToString());
+                    SetControlPropertyThreadSafe( lblSnapShot1, "Text", SaveGame_OverTime.Last().Date.ToString() );
 
                     if ( SaveGame_OverTime[SaveGame_OverTime.Count - 2].SnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] ) {
-                        result.Append( i.ToString( "X4" ) + "\t\t" + SaveGame_OverTime.Last().SnapShot[i].ToString() );
+                        result.Append( i.ToString( "X4" ) + "\t\t" + StatLocation.GetValue( SaveGame_OverTime.Last().SnapShot, i ) );
                         result.Append( "\t\t" );
-                        if ( Form1.info_Location_R.ContainsKey( i ) ) {
-                            result.Append( Form1.info_Location_R[i] );
+                        if ( StatLocation.ContainsLocation( i ) ) {
+                            result.Append( StatLocation.GetLocation_Name( i ) );
+                            i += StatLocation.GetNumberOfByteMinusOne( i );
 
                         }
                         result.Append( Environment.NewLine );
@@ -195,6 +197,11 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             } else {
                 control.GetType().InvokeMember( propertyName, BindingFlags.SetProperty, null, control, new object[] { propertyValue } );
             }
+        }
+
+        private void ShowChanges_RealTime_FormClosing ( object sender, FormClosingEventArgs e ) {
+            watcher.EnableRaisingEvents = false;
+
         }
 
 
