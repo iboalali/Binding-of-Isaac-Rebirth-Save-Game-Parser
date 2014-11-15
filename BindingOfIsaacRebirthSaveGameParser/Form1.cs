@@ -36,14 +36,33 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private FileSystemWatcher watcher;
 
+        private Timer fps;
+        private int RColor;
+        private int currentRColor;
+
         public Form1 () {
             InitializeComponent();
+
+            SettingManager.initialize();
+
+            fps = new Timer();
+            fps.Interval = ( 33 );
+            fps.Tick += fps_Tick;
+
+            RColor = currentRColor = 255;
+
+            CurrentFileName = SettingManager.ReadOption( "DefaultSaveGameFile" );
 
             watcher = new FileSystemWatcher();
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.Filter = CurrentFileName;
             watcher.Path = Path.Combine( MyDocument_Path, SaveGameFile_Path );
             watcher.Changed += watcher_Changed;
+
+        }
+
+        void fps_Tick ( object sender, EventArgs e ) {
+
 
         }
 
@@ -64,26 +83,26 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         private void Form1_Load ( object sender, EventArgs e ) {
 
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
-            Bitmap bIcon = Bitmap.FromHicon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101.Handle );
-            Color c;
-            for ( int i = 0; i < bIcon.Width; i++ ) {
-                for ( int j = 0; j < bIcon.Height; j++ ) {
-                    c = bIcon.GetPixel( i, j );
-                    bIcon.SetPixel( i, j,
-                        Color.FromArgb(
-                            c.A,
-                            ( int ) ( c.R * 0.8 ),
-                            ( int ) ( c.G * 0.8 ),
-                            ( int ) ( c.B * 0.8 )
 
-                        )
-                    );
-                }
+            switch ( SettingManager.ReadOption( "IconBrightness" ) ) {
+                case "Little":
+                    littleDarkToolStripMenuItem_Click( null, null );
+                    break;
+                case "Medium":
+                    mediumDarkToolStripMenuItem_Click( null, null );
+                    break;
+                case "Evil":
+                    evilDarkToolStripMenuItem_Click( null, null );
+                    break;
+                case "Black":
+                    justBlackToolStripMenuItem_Click( null, null );
+                    break;
+                case "EdKnowsBest":
+                    edKnowsBestToolStripMenuItem_Click( null, null );
+                    break;
+                default:
+                    break;
             }
-
-            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
-
-
 
             LoadBinaryFile( completePath, out this.buffer );
             ParseFile();
@@ -199,6 +218,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 
+            SettingManager.WriteOption( "DefaultSaveGameFile", SaveGame_FileName1 );
+            columnHeaderName.Text = "Name\t\t" + "Save Game 1";
+
             watcher.EnableRaisingEvents = false;
             watcher.Filter = CurrentFileName;
             watcher.EnableRaisingEvents = true;
@@ -212,6 +234,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 
+            SettingManager.WriteOption( "DefaultSaveGameFile", SaveGame_FileName2 );
+            columnHeaderName.Text = "Name\t\t" + "Save Game 2";
+
             watcher.EnableRaisingEvents = false;
             watcher.Filter = CurrentFileName;
             watcher.EnableRaisingEvents = true;
@@ -224,6 +249,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             CurrentFileName = SaveGame_FileName3;
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
+
+            SettingManager.WriteOption( "DefaultSaveGameFile", SaveGame_FileName3 );
+            columnHeaderName.Text = "Name\t\t" + "Save Game 3";
 
             watcher.EnableRaisingEvents = false;
             watcher.Filter = CurrentFileName;
@@ -285,6 +313,101 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private void Form1_FormClosing ( object sender, FormClosingEventArgs e ) {
             watcher.EnableRaisingEvents = false;
+
+        }
+
+        private void littleDarkToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            Bitmap bIcon = Bitmap.FromHicon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101.Handle );
+            Color c;
+            for ( int i = 0; i < bIcon.Width; i++ ) {
+                for ( int j = 0; j < bIcon.Height; j++ ) {
+                    c = bIcon.GetPixel( i, j );
+                    bIcon.SetPixel( i, j,
+                        Color.FromArgb(
+                            c.A,
+                            ( int ) ( c.R * 0.6 ),
+                            ( int ) ( c.G * 0.6 ),
+                            ( int ) ( c.B * 0.6 )
+
+                        )
+                    );
+                }
+            }
+
+            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            SettingManager.WriteOption( "IconBrightness", "Little" );
+
+        }
+
+        private void mediumDarkToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            Bitmap bIcon = Bitmap.FromHicon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101.Handle );
+            Color c;
+            for ( int i = 0; i < bIcon.Width; i++ ) {
+                for ( int j = 0; j < bIcon.Height; j++ ) {
+                    c = bIcon.GetPixel( i, j );
+                    bIcon.SetPixel( i, j,
+                        Color.FromArgb(
+                            c.A,
+                            ( int ) ( c.R * 0.4 ),
+                            ( int ) ( c.G * 0.4 ),
+                            ( int ) ( c.B * 0.4 )
+
+                        )
+                    );
+                }
+            }
+
+            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            SettingManager.WriteOption( "IconBrightness", "Medium" );
+        }
+
+        private void evilDarkToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            Bitmap bIcon = Bitmap.FromHicon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101.Handle );
+            Color c;
+            for ( int i = 0; i < bIcon.Width; i++ ) {
+                for ( int j = 0; j < bIcon.Height; j++ ) {
+                    c = bIcon.GetPixel( i, j );
+                    bIcon.SetPixel( i, j,
+                        Color.FromArgb(
+                            c.A,
+                            ( int ) ( c.R * 0.2 ),
+                            ( int ) ( c.G * 0.2 ),
+                            ( int ) ( c.B * 0.2 )
+
+                        )
+                    );
+                }
+            }
+
+            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            SettingManager.WriteOption( "IconBrightness", "Evil" );
+        }
+
+        private void justBlackToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            Bitmap bIcon = Bitmap.FromHicon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101.Handle );
+            Color c;
+            for ( int i = 0; i < bIcon.Width; i++ ) {
+                for ( int j = 0; j < bIcon.Height; j++ ) {
+                    c = bIcon.GetPixel( i, j );
+                    bIcon.SetPixel( i, j,
+                        Color.FromArgb(
+                            c.A,
+                            ( int ) ( c.R * 0.0 ),
+                            ( int ) ( c.G * 0.0 ),
+                            ( int ) ( c.B * 0.0 )
+
+                        )
+                    );
+                }
+            }
+
+            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            SettingManager.WriteOption( "IconBrightness", "Black" );
+        }
+
+        private void edKnowsBestToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            this.Icon = global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101;
+            SettingManager.WriteOption( "IconBrightness", "EdKnowsBest" );
 
         }
 

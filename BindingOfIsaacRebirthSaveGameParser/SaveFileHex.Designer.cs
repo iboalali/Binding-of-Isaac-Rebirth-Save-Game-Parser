@@ -135,9 +135,9 @@
             this.lblSelection.AutoSize = true;
             this.lblSelection.Location = new System.Drawing.Point(195, 11);
             this.lblSelection.Name = "lblSelection";
-            this.lblSelection.Size = new System.Drawing.Size(35, 13);
+            this.lblSelection.Size = new System.Drawing.Size(13, 13);
             this.lblSelection.TabIndex = 9;
-            this.lblSelection.Text = "label1";
+            this.lblSelection.Text = "0";
             // 
             // SaveFileHex
             // 

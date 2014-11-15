@@ -29,7 +29,7 @@
             this.btnShowChanges = new System.Windows.Forms.Button();
             this.btnShowChangesRealTime = new System.Windows.Forms.Button();
             this.listView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +45,13 @@
             this.hexViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.applicationIconBrightnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.littleDarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mediumDarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.evilDarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.justBlackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edKnowsBestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,7 +116,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
+            this.columnHeaderName,
             this.columnHeader2});
             this.listView.Location = new System.Drawing.Point(15, 27);
             this.listView.Name = "listView";
@@ -118,10 +125,10 @@
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader1
+            // columnHeaderName
             // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 300;
+            this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Width = 300;
             // 
             // columnHeader2
             // 
@@ -205,7 +212,9 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.compareTwoSaveGamesToolStripMenuItem,
             this.showRealTimeChangesToolStripMenuItem,
-            this.hexViewerToolStripMenuItem});
+            this.hexViewerToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.applicationIconBrightnessToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -213,21 +222,24 @@
             // compareTwoSaveGamesToolStripMenuItem
             // 
             this.compareTwoSaveGamesToolStripMenuItem.Name = "compareTwoSaveGamesToolStripMenuItem";
-            this.compareTwoSaveGamesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.compareTwoSaveGamesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.compareTwoSaveGamesToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.compareTwoSaveGamesToolStripMenuItem.Text = "Compare Two Save Games";
             this.compareTwoSaveGamesToolStripMenuItem.Click += new System.EventHandler(this.btnShowChanges_Click);
             // 
             // showRealTimeChangesToolStripMenuItem
             // 
             this.showRealTimeChangesToolStripMenuItem.Name = "showRealTimeChangesToolStripMenuItem";
-            this.showRealTimeChangesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.showRealTimeChangesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.showRealTimeChangesToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.showRealTimeChangesToolStripMenuItem.Text = "Show Real Time Changes";
             this.showRealTimeChangesToolStripMenuItem.Click += new System.EventHandler(this.btnShowChangesRealTime_Click);
             // 
             // hexViewerToolStripMenuItem
             // 
             this.hexViewerToolStripMenuItem.Name = "hexViewerToolStripMenuItem";
-            this.hexViewerToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.hexViewerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.hexViewerToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.hexViewerToolStripMenuItem.Text = "Hex Viewer";
             this.hexViewerToolStripMenuItem.Click += new System.EventHandler(this.btnShowFile_Click);
             // 
@@ -245,6 +257,63 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(216, 6);
+            // 
+            // applicationIconBrightnessToolStripMenuItem
+            // 
+            this.applicationIconBrightnessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.edKnowsBestToolStripMenuItem,
+            this.littleDarkToolStripMenuItem,
+            this.mediumDarkToolStripMenuItem,
+            this.evilDarkToolStripMenuItem,
+            this.justBlackToolStripMenuItem});
+            this.applicationIconBrightnessToolStripMenuItem.Name = "applicationIconBrightnessToolStripMenuItem";
+            this.applicationIconBrightnessToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.applicationIconBrightnessToolStripMenuItem.Text = "Application Icon Brightness";
+            // 
+            // littleDarkToolStripMenuItem
+            // 
+            this.littleDarkToolStripMenuItem.Name = "littleDarkToolStripMenuItem";
+            this.littleDarkToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+            this.littleDarkToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.littleDarkToolStripMenuItem.Text = "Little Dark";
+            this.littleDarkToolStripMenuItem.Click += new System.EventHandler(this.littleDarkToolStripMenuItem_Click);
+            // 
+            // mediumDarkToolStripMenuItem
+            // 
+            this.mediumDarkToolStripMenuItem.Name = "mediumDarkToolStripMenuItem";
+            this.mediumDarkToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
+            this.mediumDarkToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.mediumDarkToolStripMenuItem.Text = "Medium Dark";
+            this.mediumDarkToolStripMenuItem.Click += new System.EventHandler(this.mediumDarkToolStripMenuItem_Click);
+            // 
+            // evilDarkToolStripMenuItem
+            // 
+            this.evilDarkToolStripMenuItem.Name = "evilDarkToolStripMenuItem";
+            this.evilDarkToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
+            this.evilDarkToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.evilDarkToolStripMenuItem.Text = "Evil Dark";
+            this.evilDarkToolStripMenuItem.Click += new System.EventHandler(this.evilDarkToolStripMenuItem_Click);
+            // 
+            // justBlackToolStripMenuItem
+            // 
+            this.justBlackToolStripMenuItem.Name = "justBlackToolStripMenuItem";
+            this.justBlackToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5)));
+            this.justBlackToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.justBlackToolStripMenuItem.Text = "Just Black";
+            this.justBlackToolStripMenuItem.Click += new System.EventHandler(this.justBlackToolStripMenuItem_Click);
+            // 
+            // edKnowsBestToolStripMenuItem
+            // 
+            this.edKnowsBestToolStripMenuItem.Name = "edKnowsBestToolStripMenuItem";
+            this.edKnowsBestToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.edKnowsBestToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.edKnowsBestToolStripMenuItem.Text = "Ed Knows Best";
+            this.edKnowsBestToolStripMenuItem.Click += new System.EventHandler(this.edKnowsBestToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -279,7 +348,7 @@
         private System.Windows.Forms.Button btnShowChanges;
         private System.Windows.Forms.Button btnShowChangesRealTime;
         private System.Windows.Forms.ListView listView;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -295,6 +364,13 @@
         private System.Windows.Forms.ToolStripMenuItem compareTwoSaveGamesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showRealTimeChangesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hexViewerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem applicationIconBrightnessToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem littleDarkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mediumDarkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem evilDarkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem justBlackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem edKnowsBestToolStripMenuItem;
     }
 }
 

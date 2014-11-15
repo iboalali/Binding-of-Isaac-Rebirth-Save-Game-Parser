@@ -24,8 +24,22 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             buffer.CopyTo( this.buffer, 0 );
 
-            this.rtbHex.Text = ByteToHex( this.buffer );
+            //this.rtbHex.Text = ByteToHex( this.buffer );
 
+            switch ( SettingManager.ReadOption( "CurrentHexEditorView" ) ) {
+                case "Hex":
+                    btnHex_Click( null, null );
+                    break;
+                case "Dec":
+                    btnDec_Click( null, null );
+                    break;
+                case "Bin":
+                    btnBin_Click( null, null );
+                    break;
+
+                default:
+                    break;
+            }
 
 
         }
@@ -37,6 +51,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             this.rtbHex.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.txtOffsetHeader.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.btnBeyondTheByteSearch.Enabled = false;
+            SettingManager.WriteOption( "CurrentHexEditorView", "Hex" );
 
         }
 
@@ -47,6 +62,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             this.rtbHex.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.txtOffsetHeader.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.btnBeyondTheByteSearch.Enabled = false;
+            SettingManager.WriteOption( "CurrentHexEditorView", "Dec" );
 
         }
 
@@ -57,6 +73,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             this.txtOffsetHeader.Font = new System.Drawing.Font( "Courier New", 8.25F );
             this.rtbHex.Font = new System.Drawing.Font( "Courier New", 8.25F );
             this.btnBeyondTheByteSearch.Enabled = true;
+            SettingManager.WriteOption( "CurrentHexEditorView", "Bin" );
 
         }
 
@@ -75,7 +92,6 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                     result.Append( ( ( i / 16 ) + 1 ).ToString( "X3" ).PadRight( 4, '0' ) + " " );
                 }
             }
-
 
 
             return result.ToString();
@@ -129,6 +145,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             foreach ( string item in binaryBuffer ) {
                 completeBinary += item;
             }
+
 
             return result.ToString();
         }
