@@ -1,4 +1,4 @@
-Binding of Isaac Rebirth Stats
+The Binding of Isaac Rebirth Stats
 =========================================
 
 
