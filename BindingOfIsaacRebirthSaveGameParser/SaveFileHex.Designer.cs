@@ -47,6 +47,7 @@
             this.rtbHex.TabIndex = 0;
             this.rtbHex.Text = "";
             this.rtbHex.SelectionChanged += new System.EventHandler(this.rtbHex_SelectionChanged);
+            this.rtbHex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtbHex_KeyPress);
             // 
             // btnHex
             // 
@@ -105,7 +106,8 @@
             this.txtSearchWord.Location = new System.Drawing.Point(271, 35);
             this.txtSearchWord.Name = "txtSearchWord";
             this.txtSearchWord.Size = new System.Drawing.Size(141, 20);
-            this.txtSearchWord.TabIndex = 6;
+            this.txtSearchWord.TabIndex = 0;
+            this.txtSearchWord.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearchWord_KeyPress);
             // 
             // btnResetSearch
             // 
@@ -113,7 +115,7 @@
             this.btnResetSearch.Location = new System.Drawing.Point(271, 6);
             this.btnResetSearch.Name = "btnResetSearch";
             this.btnResetSearch.Size = new System.Drawing.Size(27, 23);
-            this.btnResetSearch.TabIndex = 7;
+            this.btnResetSearch.TabIndex = 4;
             this.btnResetSearch.Text = "R";
             this.btnResetSearch.UseVisualStyleBackColor = true;
             this.btnResetSearch.Click += new System.EventHandler(this.btnResetSearch_Click);
@@ -125,7 +127,7 @@
             this.btnBeyondTheByteSearch.Location = new System.Drawing.Point(385, 6);
             this.btnBeyondTheByteSearch.Name = "btnBeyondTheByteSearch";
             this.btnBeyondTheByteSearch.Size = new System.Drawing.Size(27, 23);
-            this.btnBeyondTheByteSearch.TabIndex = 8;
+            this.btnBeyondTheByteSearch.TabIndex = 6;
             this.btnBeyondTheByteSearch.Text = "A";
             this.btnBeyondTheByteSearch.UseVisualStyleBackColor = true;
             this.btnBeyondTheByteSearch.Click += new System.EventHandler(this.btnBeyondTheByteSearch_Click);
@@ -141,6 +143,7 @@
             // 
             // SaveFileHex
             // 
+            this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(424, 504);
@@ -156,7 +159,7 @@
             this.Controls.Add(this.rtbHex);
             this.MinimumSize = new System.Drawing.Size(440, 543);
             this.Name = "SaveFileHex";
-            this.Text = "SaveFileHex";
+            this.Text = "Save File Hex Viewer";
             this.ResumeLayout(false);
             this.PerformLayout();
 

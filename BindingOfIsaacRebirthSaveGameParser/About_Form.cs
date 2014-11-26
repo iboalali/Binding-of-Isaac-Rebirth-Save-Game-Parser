@@ -13,9 +13,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
     public partial class About_Form : Form {
         public About_Form () {
             InitializeComponent();
-            Icon i = new System.Drawing.Icon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101, 32, 32 );
+            //Icon i = new System.Drawing.Icon( global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101, 32, 32 );
 
-            pictureBox1.Image = i.ToBitmap();
+            pictureBox1.Image = Form1.appIcon.ToBitmap();
 
             LinkLabel.Link linkLicense = new LinkLabel.Link();
             linkLicense.LinkData = "http://www.apache.org/licenses/LICENSE-2.0";

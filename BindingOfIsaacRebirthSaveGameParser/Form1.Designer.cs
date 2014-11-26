@@ -43,15 +43,17 @@
             this.compareTwoSaveGamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showRealTimeChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hexViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trackingLocationManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.applicationIconBrightnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edKnowsBestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.littleDarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mediumDarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.evilDarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.justBlackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.edKnowsBestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timeLineViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -213,6 +215,8 @@
             this.compareTwoSaveGamesToolStripMenuItem,
             this.showRealTimeChangesToolStripMenuItem,
             this.hexViewerToolStripMenuItem,
+            this.timeLineViewerToolStripMenuItem,
+            this.trackingLocationManagerToolStripMenuItem,
             this.toolStripSeparator1,
             this.applicationIconBrightnessToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
@@ -223,7 +227,7 @@
             // 
             this.compareTwoSaveGamesToolStripMenuItem.Name = "compareTwoSaveGamesToolStripMenuItem";
             this.compareTwoSaveGamesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.compareTwoSaveGamesToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.compareTwoSaveGamesToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
             this.compareTwoSaveGamesToolStripMenuItem.Text = "Compare Two Save Games";
             this.compareTwoSaveGamesToolStripMenuItem.Click += new System.EventHandler(this.btnShowChanges_Click);
             // 
@@ -231,7 +235,7 @@
             // 
             this.showRealTimeChangesToolStripMenuItem.Name = "showRealTimeChangesToolStripMenuItem";
             this.showRealTimeChangesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.showRealTimeChangesToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.showRealTimeChangesToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
             this.showRealTimeChangesToolStripMenuItem.Text = "Show Real Time Changes";
             this.showRealTimeChangesToolStripMenuItem.Click += new System.EventHandler(this.btnShowChangesRealTime_Click);
             // 
@@ -239,29 +243,22 @@
             // 
             this.hexViewerToolStripMenuItem.Name = "hexViewerToolStripMenuItem";
             this.hexViewerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.hexViewerToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.hexViewerToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
             this.hexViewerToolStripMenuItem.Text = "Hex Viewer";
             this.hexViewerToolStripMenuItem.Click += new System.EventHandler(this.btnShowFile_Click);
             // 
-            // helpToolStripMenuItem
+            // trackingLocationManagerToolStripMenuItem
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.trackingLocationManagerToolStripMenuItem.Name = "trackingLocationManagerToolStripMenuItem";
+            this.trackingLocationManagerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.trackingLocationManagerToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
+            this.trackingLocationManagerToolStripMenuItem.Text = "Tracking Location Manager";
+            this.trackingLocationManagerToolStripMenuItem.Click += new System.EventHandler(this.trackingLocationManagerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(216, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(256, 6);
             // 
             // applicationIconBrightnessToolStripMenuItem
             // 
@@ -272,8 +269,16 @@
             this.evilDarkToolStripMenuItem,
             this.justBlackToolStripMenuItem});
             this.applicationIconBrightnessToolStripMenuItem.Name = "applicationIconBrightnessToolStripMenuItem";
-            this.applicationIconBrightnessToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.applicationIconBrightnessToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
             this.applicationIconBrightnessToolStripMenuItem.Text = "Application Icon Brightness";
+            // 
+            // edKnowsBestToolStripMenuItem
+            // 
+            this.edKnowsBestToolStripMenuItem.Name = "edKnowsBestToolStripMenuItem";
+            this.edKnowsBestToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.edKnowsBestToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.edKnowsBestToolStripMenuItem.Text = "Ed Knows Best";
+            this.edKnowsBestToolStripMenuItem.Click += new System.EventHandler(this.edKnowsBestToolStripMenuItem_Click);
             // 
             // littleDarkToolStripMenuItem
             // 
@@ -307,13 +312,28 @@
             this.justBlackToolStripMenuItem.Text = "Just Black";
             this.justBlackToolStripMenuItem.Click += new System.EventHandler(this.justBlackToolStripMenuItem_Click);
             // 
-            // edKnowsBestToolStripMenuItem
+            // helpToolStripMenuItem
             // 
-            this.edKnowsBestToolStripMenuItem.Name = "edKnowsBestToolStripMenuItem";
-            this.edKnowsBestToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.edKnowsBestToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.edKnowsBestToolStripMenuItem.Text = "Ed Knows Best";
-            this.edKnowsBestToolStripMenuItem.Click += new System.EventHandler(this.edKnowsBestToolStripMenuItem_Click);
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // timeLineViewerToolStripMenuItem
+            // 
+            this.timeLineViewerToolStripMenuItem.Name = "timeLineViewerToolStripMenuItem";
+            this.timeLineViewerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.timeLineViewerToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
+            this.timeLineViewerToolStripMenuItem.Text = "Savegame Timeline Viewer";
+            this.timeLineViewerToolStripMenuItem.Click += new System.EventHandler(this.timeLineViewerToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -371,6 +391,8 @@
         private System.Windows.Forms.ToolStripMenuItem evilDarkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem justBlackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem edKnowsBestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trackingLocationManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem timeLineViewerToolStripMenuItem;
     }
 }
 

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace BindingOfIsaacRebirthSaveGameParser {
 
+    [Serializable]
     public struct SaveGameSnapShot {
         public int Index { get; set; }
         public byte[] SnapShot { get; set; }
@@ -19,7 +20,6 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         public static int Counter { get; set; }
 
     }
-
 
     public partial class ShowChanges_RealTime : Form {
         private FileSystemWatcher watcher;
@@ -31,9 +31,10 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         private byte[] firstSnapShot;
         private bool didSomethingChange;
 
-
         public ShowChanges_RealTime ( string path, string fileName ) {
             InitializeComponent();
+
+            this.Icon = Form1.appIcon;
 
             this.Path = path;
             this.FileName = fileName;
@@ -184,10 +185,9 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         }
 
         private void btnLocationToTrack_Click ( object sender, EventArgs e ) {
+            new SnapShotTimeLine_Form().Show();
 
         }
-
-
 
         private delegate void SetControlPropertyThreadSafeDelegate ( Control control, string propertyName, object propertyValue );
 

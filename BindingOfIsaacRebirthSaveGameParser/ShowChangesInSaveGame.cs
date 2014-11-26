@@ -19,6 +19,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         public ShowChangesInSaveGame () {
             InitializeComponent();
+            this.Icon = Form1.appIcon;
 
         }
 

@@ -15,18 +15,23 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         byte[] buffer;
         string[] binaryBuffer;
         string completeBinary;
+        string currentView;
 
         public SaveFileHex ( byte[] buffer ) {
             InitializeComponent();
+
+            this.Icon = Form1.appIcon;
+
             this.buffer = new byte[buffer.Length];
             this.binaryBuffer = new string[buffer.Length];
             this.completeBinary = string.Empty;
 
+
             buffer.CopyTo( this.buffer, 0 );
 
             //this.rtbHex.Text = ByteToHex( this.buffer );
-
-            switch ( SettingManager.ReadOption( "CurrentHexEditorView" ) ) {
+            currentView = SettingManager.ReadOption( "CurrentHexEditorView" );
+            switch ( currentView ) {
                 case "Hex":
                     btnHex_Click( null, null );
                     break;
@@ -51,6 +56,10 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             this.rtbHex.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.txtOffsetHeader.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.btnBeyondTheByteSearch.Enabled = false;
+            this.txtSearchWord.MaxLength = 2;
+            this.currentView = "Hex";
+            this.btnResetSearch_Click( null, null );
+
             SettingManager.WriteOption( "CurrentHexEditorView", "Hex" );
 
         }
@@ -62,8 +71,10 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             this.rtbHex.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.txtOffsetHeader.Font = new System.Drawing.Font( "Courier New", 9.25F );
             this.btnBeyondTheByteSearch.Enabled = false;
+            this.txtSearchWord.MaxLength = 3;
+            this.currentView = "Dec";
+            this.btnResetSearch_Click( null, null );
             SettingManager.WriteOption( "CurrentHexEditorView", "Dec" );
-
         }
 
         private void btnBin_Click ( object sender, EventArgs e ) {
@@ -73,8 +84,10 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             this.txtOffsetHeader.Font = new System.Drawing.Font( "Courier New", 8.25F );
             this.rtbHex.Font = new System.Drawing.Font( "Courier New", 8.25F );
             this.btnBeyondTheByteSearch.Enabled = true;
+            this.txtSearchWord.MaxLength = 8;
+            this.currentView = "Bin";
+            this.btnResetSearch_Click( null, null );
             SettingManager.WriteOption( "CurrentHexEditorView", "Bin" );
-
         }
 
         private string ByteToHex ( byte[] buffer ) {
@@ -156,10 +169,20 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             }
 
             rtbHex.SelectAll();
-            rtbHex.SelectionColor = Color.Black;
+            rtbHex.SelectionBackColor = Color.White;
             rtbHex.DeselectAll();
 
-            HighlightText( rtbHex, txtSearchWord.Text, Color.Red );
+            HighlightText( rtbHex, txtSearchWord.Text, Color.OrangeRed );
+
+            int count = 0;
+            for ( int i = 0; i < rtbHex.Lines.Length; i++ ) {
+                rtbHex.Select( count, 4 );
+                count += rtbHex.Lines[i].Length + 1;
+                rtbHex.SelectionBackColor = Color.White;
+                rtbHex.DeselectAll();
+
+
+            }
 
         }
 
@@ -168,20 +191,21 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             while ( ( index = myRtb.Text.IndexOf( word, startIndex ) ) != -1 ) {
                 myRtb.Select( index, word.Length );
-                myRtb.SelectionColor = color;
+                myRtb.SelectionBackColor = color;
 
                 startIndex = index + word.Length;
             }
 
             myRtb.SelectionStart = s_start;
             myRtb.SelectionLength = 0;
-            myRtb.SelectionColor = Color.Black;
+            myRtb.SelectionBackColor = Color.White;
         }
 
         private void btnResetSearch_Click ( object sender, EventArgs e ) {
             rtbHex.SelectAll();
-            rtbHex.SelectionColor = Color.Black;
+            rtbHex.SelectionBackColor = Color.White;
             rtbHex.DeselectAll();
+            txtSearchWord.Text = string.Empty;
         }
 
         private void btnBeyondTheByteSearch_Click ( object sender, EventArgs e ) {
@@ -191,7 +215,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             }
 
             rtbHex.SelectAll();
-            rtbHex.SelectionColor = Color.Black;
+            rtbHex.SelectionBackColor = Color.White;
             rtbHex.DeselectAll();
 
             int[] indecies = indexOfAnyBits( completeBinary, txtSearchWord.Text );
@@ -210,10 +234,10 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                     if ( ( indecies[i] % ( 8 * 16 ) ) + txtSearchWord.Text.Length >= ( 8 * 16 ) ) {
                         int rem = ( ( 8 * 16 ) * ( ( indecies[i] / ( 8 * 16 ) ) + 1 ) ) - indecies[i];
                         rtbHex.Select( GetLocationInRtb( indecies[i] / 8, indecies[i] % 8 ), rem );
-                        rtbHex.SelectionColor = Color.Red;
+                        rtbHex.SelectionBackColor = Color.OrangeRed;
 
                         rtbHex.Select( GetLocationInRtb( ( indecies[i] + rem ) / 8, ( indecies[i] + rem ) % 8 ), txtSearchWord.Text.Length - rem );
-                        rtbHex.SelectionColor = Color.Red;
+                        rtbHex.SelectionBackColor = Color.OrangeRed;
                     } else {
                         rtbHex.Select( GetLocationInRtb( indecies[i] / 8, indecies[i] % 8 ), txtSearchWord.Text.Length + 1 );
 
@@ -225,14 +249,14 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
                 }
 
-                rtbHex.SelectionColor = Color.Red;
+                rtbHex.SelectionBackColor = Color.OrangeRed;
 
 
 
             }
             rtbHex.SelectionStart = s_start;
             rtbHex.SelectionLength = 0;
-            rtbHex.SelectionColor = Color.Black;
+            rtbHex.SelectionBackColor = Color.White;
 
         }
 
@@ -270,6 +294,46 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         // for debug
         private void rtbHex_SelectionChanged ( object sender, EventArgs e ) {
             lblSelection.Text = ( sender as RichTextBox ).SelectionStart.ToString();
+        }
+
+        private void txtSearchWord_KeyPress ( object sender, KeyPressEventArgs e ) {
+            switch ( currentView ) {
+                case "Hex":
+                    if ( !char.IsDigit( e.KeyChar ) && !char.IsControl( e.KeyChar )
+                        && e.KeyChar != 'A' && e.KeyChar != 'B' && e.KeyChar != 'C'
+                        && e.KeyChar != 'D' && e.KeyChar != 'E' && e.KeyChar != 'F'
+                        && e.KeyChar != 'a' && e.KeyChar != 'b' && e.KeyChar != 'c'
+                        && e.KeyChar != 'd' && e.KeyChar != 'e' && e.KeyChar != 'f' ) {
+
+                        e.Handled = true;
+
+                    } else {
+                        if ( char.IsLower( e.KeyChar ) ) {
+                            e.KeyChar = e.KeyChar.ToString().ToUpper().First();
+                        }
+
+                    }
+                    break;
+                case "Bin":
+                    if ( !char.IsControl( e.KeyChar ) && e.KeyChar != '1' && e.KeyChar != '0' ) {
+                        e.Handled = true;
+
+                    }
+                    break;
+                default:
+                    if ( !char.IsDigit( e.KeyChar ) && !char.IsControl( e.KeyChar ) ) {
+                        e.Handled = true;
+
+                    }
+                    break;
+            }
+
+
+
+        }
+
+        private void rtbHex_KeyPress ( object sender, KeyPressEventArgs e ) {
+            e.Handled = true;
         }
 
 

@@ -13,6 +13,7 @@ using System.Windows.Forms;
 namespace BindingOfIsaacRebirthSaveGameParser {
     public partial class Form1 : Form {
 
+        public static Icon appIcon;
         private byte[] buffer;
         private BinaryReader br;
         /// <summary>
@@ -334,7 +335,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 }
             }
 
-            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            appIcon = this.Icon = Icon.FromHandle( bIcon.GetHicon() );
             SettingManager.WriteOption( "IconBrightness", "Little" );
 
         }
@@ -357,7 +358,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 }
             }
 
-            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            appIcon = this.Icon = Icon.FromHandle( bIcon.GetHicon() );
             SettingManager.WriteOption( "IconBrightness", "Medium" );
         }
 
@@ -379,7 +380,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 }
             }
 
-            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            appIcon = this.Icon = Icon.FromHandle( bIcon.GetHicon() );
             SettingManager.WriteOption( "IconBrightness", "Evil" );
         }
 
@@ -401,16 +402,29 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 }
             }
 
-            this.Icon = Icon.FromHandle( bIcon.GetHicon() );
+            appIcon = this.Icon = Icon.FromHandle( bIcon.GetHicon() );
             SettingManager.WriteOption( "IconBrightness", "Black" );
         }
 
         private void edKnowsBestToolStripMenuItem_Click ( object sender, EventArgs e ) {
-            this.Icon = global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101;
+            appIcon = this.Icon = global::BindingOfIsaacRebirthSaveGameParser.Properties.Resources.isaac_ng_101;
             SettingManager.WriteOption( "IconBrightness", "EdKnowsBest" );
 
         }
 
+        private void trackingLocationManagerToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            TrackingLocationManager_Form t = new TrackingLocationManager_Form();
+            t.ShowDialog();
+            watcher_Changed( null, null );
+
+
+        }
+
+        private void timeLineViewerToolStripMenuItem_Click ( object sender, EventArgs e ) {
+            new SnapShotTimeLine_Form().Show();
+        }
+
+       
 
     }
 }

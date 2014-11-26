@@ -33,6 +33,10 @@ Number of Accesses to the Save Game|1251|1252
         static StatLocation () {
             locations = new List<Location>();
             LocationFileName = "data";
+            Initialize();
+        }
+
+        public static void Initialize () {
             try {
                 sr = new StreamReader( LocationFileName );
 
@@ -66,7 +70,6 @@ Number of Accesses to the Save Game|1251|1252
             return true;
 
         }
-
 
         public static int GetLocation_From ( string name ) {
             foreach ( var item in locations ) {
@@ -104,6 +107,50 @@ Number of Accesses to the Save Game|1251|1252
 
         public static void AddNewLocation ( StatLocation.Location location ) {
             locations.Add( CloneLocation( location ) );
+            using ( StreamWriter sw = new StreamWriter( LocationFileName, true ) ) {
+                sw.WriteLine( location.Name + "|" + location.From + "|" + location.To );
+
+            }
+        }
+
+        public static void UpdateLocation ( string oldName, StatLocation.Location location ) {
+
+            for ( int i = 0; i < locations.Count; i++ ) {
+                if ( locations[i].Name == oldName ) {
+                    locations[i] = CloneLocation( location );
+
+                }
+
+            }
+
+            using ( StreamWriter sw = new StreamWriter( LocationFileName, false ) ) {
+                foreach ( var item in locations ) {
+                    sw.WriteLine( item.Name + "|" + item.From + "|" + item.To );
+
+                }
+
+            }
+
+        }
+
+        public static void RemoveLocation ( string name ) {
+            for ( int i = 0; i < locations.Count; i++ ) {
+                if ( locations[i].Name == name ) {
+                    locations.RemoveAt( i );
+                    break;
+
+                }
+
+            }
+
+            using ( StreamWriter sw = new StreamWriter( LocationFileName, false ) ) {
+                foreach ( var item in locations ) {
+                    sw.WriteLine( item.Name + "|" + item.From + "|" + item.To );
+
+                }
+
+            }
+
 
         }
 
@@ -133,7 +180,6 @@ Number of Accesses to the Save Game|1251|1252
             return GetValueFromSaveGame( saveGame, GetLocation_From( name ), GetLocation_To( name ) );
 
         }
-
 
         public static int GetNumberOfByteMinusOne ( int location ) {
             string name = GetLocation_Name( location );

@@ -31,13 +31,19 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCurrent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnExport = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toTextFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(93, 12);
+            this.btnNext.Location = new System.Drawing.Point(93, 27);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
             this.btnNext.TabIndex = 0;
@@ -47,7 +53,7 @@
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(12, 12);
+            this.btnPrevious.Location = new System.Drawing.Point(12, 27);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(75, 23);
             this.btnPrevious.TabIndex = 1;
@@ -58,7 +64,7 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(328, 316);
+            this.btnClose.Location = new System.Drawing.Point(407, 368);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -75,9 +81,9 @@
             this.columnHeader1,
             this.columnHeaderLast,
             this.columnHeaderCurrent});
-            this.listView.Location = new System.Drawing.Point(12, 41);
+            this.listView.Location = new System.Drawing.Point(12, 56);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(391, 269);
+            this.listView.Size = new System.Drawing.Size(470, 306);
             this.listView.TabIndex = 3;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -96,34 +102,74 @@
             this.columnHeaderCurrent.Text = "Value on []";
             this.columnHeaderCurrent.Width = 160;
             // 
-            // btnExport
+            // menuStrip1
             // 
-            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExport.Enabled = false;
-            this.btnExport.Location = new System.Drawing.Point(247, 316);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
-            this.btnExport.TabIndex = 4;
-            this.btnExport.Text = "Export";
-            this.toolTip1.SetToolTip(this.btnExport, "Wait until the data is processed");
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importToolStripMenuItem,
+            this.exportToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(494, 24);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileToolStripMenuItem});
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.importToolStripMenuItem.Text = "Import";
+            // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.openFileToolStripMenuItem.Text = "Open Binary File";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toFileToolStripMenuItem,
+            this.toTextFileToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // toFileToolStripMenuItem
+            // 
+            this.toFileToolStripMenuItem.Name = "toFileToolStripMenuItem";
+            this.toFileToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.toFileToolStripMenuItem.Text = "To Binary File";
+            this.toFileToolStripMenuItem.Click += new System.EventHandler(this.exportToBinaryFileToolStripMenuItem_Click);
+            // 
+            // toTextFileToolStripMenuItem
+            // 
+            this.toTextFileToolStripMenuItem.Name = "toTextFileToolStripMenuItem";
+            this.toTextFileToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.toTextFileToolStripMenuItem.Text = "To a ReadableText File";
+            this.toTextFileToolStripMenuItem.Click += new System.EventHandler(this.exportToTextFileToolStripMenuItem_Click);
             // 
             // SnapShotTimeLine_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 351);
-            this.Controls.Add(this.btnExport);
+            this.ClientSize = new System.Drawing.Size(494, 403);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(431, 390);
             this.Name = "SnapShotTimeLine_Form";
             this.Text = "Savegame Timeline";
             this.Load += new System.EventHandler(this.SnapShotTimeLine_Form_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -136,7 +182,12 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeaderLast;
         private System.Windows.Forms.ColumnHeader columnHeaderCurrent;
-        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toTextFileToolStripMenuItem;
     }
 }
