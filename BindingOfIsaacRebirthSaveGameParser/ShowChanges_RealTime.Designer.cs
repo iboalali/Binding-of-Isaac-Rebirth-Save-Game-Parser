@@ -27,7 +27,6 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.lblSnapShot1 = new System.Windows.Forms.Label();
             this.lblCounter = new System.Windows.Forms.Label();
-            this.btnLocationToTrack = new System.Windows.Forms.Button();
             this.listView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -74,17 +73,6 @@
             this.lblCounter.Text = "0";
             this.lblCounter.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnLocationToTrack
-            // 
-            this.btnLocationToTrack.Location = new System.Drawing.Point(174, 12);
-            this.btnLocationToTrack.Name = "btnLocationToTrack";
-            this.btnLocationToTrack.Size = new System.Drawing.Size(180, 23);
-            this.btnLocationToTrack.TabIndex = 7;
-            this.btnLocationToTrack.Text = "[debug] time line";
-            this.btnLocationToTrack.UseVisualStyleBackColor = true;
-            this.btnLocationToTrack.Visible = false;
-            this.btnLocationToTrack.Click += new System.EventHandler(this.btnLocationToTrack_Click);
-            // 
             // listView
             // 
             this.listView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -125,7 +113,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 315);
             this.Controls.Add(this.listView);
-            this.Controls.Add(this.btnLocationToTrack);
             this.Controls.Add(this.lblCounter);
             this.Controls.Add(this.lblSnapShot1);
             this.Controls.Add(this.btnStop);
@@ -144,7 +131,6 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Label lblSnapShot1;
         private System.Windows.Forms.Label lblCounter;
-        private System.Windows.Forms.Button btnLocationToTrack;
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;

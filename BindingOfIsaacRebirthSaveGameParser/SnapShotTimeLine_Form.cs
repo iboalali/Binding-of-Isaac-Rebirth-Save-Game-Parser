@@ -32,24 +32,11 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         public SnapShotTimeLine_Form ( List<SaveGameSnapShot> saveGames ) {
             InitializeComponent();
 
-            MenuButton mb = new MenuButton();
-            mb.Location = new System.Drawing.Point( 200, 316 );
-            mb.Size = new System.Drawing.Size( 75, 23 );
-            mb.Name = "btnExportMenu";
-            mb.Text = "Export";
-            this.toolTip1.SetToolTip( mb, "Wait until the data is processed" );
-            mb.UseVisualStyleBackColor = true;
-            mb.Enabled = false;
-            mb.Anchor = ( ( System.Windows.Forms.AnchorStyles ) ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right ) ) );
-
-
-
             bw = new BackgroundWorker();
             bw.DoWork += bw_DoWork;
             bw.RunWorkerCompleted += bw_RunWorkerCompleted;
 
             this.Icon = Form1.appIcon;
-
             this.index = 1;
             this.saveGames = saveGames;
 
@@ -129,9 +116,10 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         }
 
         void bw_RunWorkerCompleted ( object sender, RunWorkerCompletedEventArgs e ) {
-            SetControlPropertyThreadSafe( btnExport, "Enable", true );
+            //SetControlPropertyThreadSafe( exportToolStripMenuItem, "Enable", true );
             //SetControlPropertyThreadSafe( toolTip1, "Active", false );
             toolTip1.Active = false;
+            exportToolStripMenuItem.Enabled = true;
 
         }
 
@@ -263,6 +251,33 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
                 }
 
+            }
+
+            if ( saveGames == null ) {
+                return;
+            }
+
+            columnHeaderLast.Text = "Value on " + saveGames[0].Date.ToString();
+            columnHeaderCurrent.Text = "Value on " + saveGames[1].Date.ToString();
+            saveGameChanges = new List<ExportData>();
+
+            for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ ) {
+                if ( saveGames[0].SnapShot[i] != saveGames[1].SnapShot[i] ) {
+
+                    listView.Items.Add(
+                        new ListViewItem(
+                            new string[] {
+                                i.ToString("X4"),
+                                saveGames[0].SnapShot[i].ToString("X2"),
+                                saveGames[1].SnapShot[i].ToString("X2"),
+                                                                
+                            }
+                        )
+                    );
+
+
+
+                }
             }
 
 

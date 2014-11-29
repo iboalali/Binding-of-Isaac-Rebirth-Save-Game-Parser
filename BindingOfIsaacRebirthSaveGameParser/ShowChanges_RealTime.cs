@@ -128,48 +128,63 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             }
 
-            StringBuilder result = new StringBuilder();
+
+            List<string[]> lists = new List<string[]>();
             if ( SaveGame_OverTime.Count == 1 ) {
                 for ( int i = 0; i < firstSnapShot.Length; i++ ) {
                     SetControlPropertyThreadSafe( lblSnapShot1, "Text", SaveGame_OverTime.Last().Date.ToString() );
 
                     if ( firstSnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] ) {
-                        result.Append( i.ToString( "X4" ) + "\t\t" + SaveGame_OverTime.Last().SnapShot[i].ToString() );
-                        result.Append( "\t\t" );
                         if ( StatLocation.ContainsLocation( i ) ) {
-                            result.Append( StatLocation.GetLocation_Name( i ) );
+                            lists.Add( new string[]{
+                                    i.ToString( "X4" ),
+                                    "---",
+                                    SaveGame_OverTime.Last().SnapShot[i].ToString(),
+                                    StatLocation.GetLocation_Name( i )
+                                }
+                            );
                             i += StatLocation.GetNumberOfByteMinusOne( i );
 
-                        }
-                        result.Append( Environment.NewLine );
+                        } else {
+
+                            lists.Add( new string[]{
+                                    i.ToString( "X4" ),
+                                    "---",
+                                    SaveGame_OverTime.Last().SnapShot[i].ToString()
+                                }
+                            );
+                        } // end if ( StatLocation.ContainsLocation( i ) ) else
                         didSomethingChange = true;
-
-                    }
-                }
-
-
-
+                    } // end if ( firstSnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] )
+                } // end for ( int i = 0; i < firstSnapShot.Length; i++ )
             } else {
                 for ( int i = 0; i < firstSnapShot.Length; i++ ) {
                     SetControlPropertyThreadSafe( lblSnapShot1, "Text", SaveGame_OverTime.Last().Date.ToString() );
-
                     if ( SaveGame_OverTime[SaveGame_OverTime.Count - 2].SnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] ) {
-                        result.Append( i.ToString( "X4" ) + "\t\t" + StatLocation.GetValue( SaveGame_OverTime.Last().SnapShot, i ) );
-                        result.Append( "\t\t" );
                         if ( StatLocation.ContainsLocation( i ) ) {
-                            result.Append( StatLocation.GetLocation_Name( i ) );
+                            lists.Add( new string[]{
+                                    i.ToString( "X4" ),
+                                    SaveGame_OverTime[SaveGame_OverTime.Count - 2].SnapShot[i].ToString(),
+                                    SaveGame_OverTime.Last().SnapShot[i].ToString(),
+                                    StatLocation.GetLocation_Name( i )
+                                }
+                            );
                             i += StatLocation.GetNumberOfByteMinusOne( i );
 
-                        }
-                        result.Append( Environment.NewLine );
+                        } else {
+
+                            lists.Add( new string[]{
+                                    i.ToString( "X4" ),
+                                    SaveGame_OverTime[SaveGame_OverTime.Count - 2].SnapShot[i].ToString(),
+                                    SaveGame_OverTime.Last().SnapShot[i].ToString()
+                                }
+                            );
+                        } // end if ( StatLocation.ContainsLocation( i ) ) else
                         didSomethingChange = true;
+                    } // end if ( SaveGame_OverTime[SaveGame_OverTime.Count - 2].SnapShot[i] != SaveGame_OverTime.Last().SnapShot[i] )
+                } // end for ( int i = 0; i < firstSnapShot.Length; i++ )
+            } // end if ( SaveGame_OverTime.Count == 1 ) else
 
-                    }
-                }
-
-
-
-            }
 
             if ( !didSomethingChange ) {
                 SaveGame_OverTime.RemoveAt( SaveGame_OverTime.Count - 1 );
@@ -177,7 +192,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 SetControlPropertyThreadSafe( lblCounter, "Text", SaveGameSnapShot.Counter.ToString() );
 
             } else {
-                SetControlPropertyThreadSafe( rtbChanges, "Text", result.ToString() );
+                SetItemsInListViewThreadSafe( listView, lists );
 
             }
             didSomethingChange = false;
@@ -198,6 +213,21 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 control.GetType().InvokeMember( propertyName, BindingFlags.SetProperty, null, control, new object[] { propertyValue } );
             }
         }
+
+        private delegate void SetItemsInListViewThreadSafeDelegate ( ListView control, List<string[]> lists );
+
+        public static void SetItemsInListViewThreadSafe ( ListView control, List<string[]> lists ) {
+            if ( control.InvokeRequired ) {
+                control.Invoke( new SetItemsInListViewThreadSafeDelegate( SetItemsInListViewThreadSafe ), new object[] { control, lists } );
+            } else {
+                foreach ( var item in lists ) {
+                    control.Items.Add( new ListViewItem( item ) );
+
+                }
+
+            }
+        }
+
 
         private void ShowChanges_RealTime_FormClosing ( object sender, FormClosingEventArgs e ) {
             watcher.EnableRaisingEvents = false;
