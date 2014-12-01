@@ -31,6 +31,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderLast = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCurrent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +65,7 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(407, 368);
+            this.btnClose.Location = new System.Drawing.Point(611, 368);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 2;
@@ -80,10 +81,11 @@
             this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeaderLast,
-            this.columnHeaderCurrent});
+            this.columnHeaderCurrent,
+            this.columnHeader2});
             this.listView.Location = new System.Drawing.Point(12, 56);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(470, 306);
+            this.listView.Size = new System.Drawing.Size(674, 306);
             this.listView.TabIndex = 3;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -91,16 +93,22 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Location";
+            this.columnHeader1.Width = 100;
             // 
             // columnHeaderLast
             // 
-            this.columnHeaderLast.Text = "Value on []";
-            this.columnHeaderLast.Width = 160;
+            this.columnHeaderLast.Text = "";
+            this.columnHeaderLast.Width = 170;
             // 
             // columnHeaderCurrent
             // 
-            this.columnHeaderCurrent.Text = "Value on []";
-            this.columnHeaderCurrent.Width = 160;
+            this.columnHeaderCurrent.Text = "";
+            this.columnHeaderCurrent.Width = 170;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Description";
+            this.columnHeader2.Width = 220;
             // 
             // menuStrip1
             // 
@@ -109,7 +117,7 @@
             this.exportToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(494, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(698, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -133,7 +141,6 @@
             this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toFileToolStripMenuItem,
             this.toTextFileToolStripMenuItem});
-            this.exportToolStripMenuItem.Enabled = false;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.exportToolStripMenuItem.Text = "Export";
@@ -156,7 +163,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 403);
+            this.ClientSize = new System.Drawing.Size(698, 403);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnPrevious);
@@ -190,5 +197,6 @@
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toTextFileToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }

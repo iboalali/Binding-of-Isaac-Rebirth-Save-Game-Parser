@@ -27,6 +27,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 All kinds of Rocks, Mushrooms, Skulls and Urns|231|232
 All kinds of Poops|239|240
 Coins in the Donation Machine|299|300
+Death Streak|599|599
 Number of Accesses to the Save Game|1251|1252
 ";
 
@@ -179,11 +180,26 @@ Number of Accesses to the Save Game|1251|1252
             string name = GetLocation_Name( location );
             return GetValueFromSaveGame( saveGame, GetLocation_From( name ), GetLocation_To( name ) );
 
-        }
+        }   
 
         public static int GetNumberOfByteMinusOne ( int location ) {
             string name = GetLocation_Name( location );
+            if ( name == string.Empty ) {
+                return 0;
+
+            }
             return GetLocation_To( name ) - GetLocation_From( name );
+
+
+        }
+
+        public static int GetNumberOfByte ( int location ) {
+            string name = GetLocation_Name( location );
+            if ( name == string.Empty ) {
+                return 0;
+
+            }
+            return ( GetLocation_To( name ) - GetLocation_From( name ) ) + 1;
 
 
         }

@@ -147,12 +147,29 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         /// <param name="path">Path to the file</param>
         /// <param name="buffer">The byte array to fill</param>
         private void LoadBinaryFile ( string path, out byte[] buffer ) {
-            using ( br = new BinaryReader( File.Open( path, FileMode.Open ) ) ) {
-                //SaveGameLength = br.BaseStream.Length;
-                buffer = new byte[br.BaseStream.Length];
-                int r = br.Read( buffer, 0, buffer.Length );
+            int counter = 0;
+            string m = string.Empty;
+            buffer = new byte[1];
+
+            while ( counter < 20 ) {
+                try {
+                    using ( br = new BinaryReader( File.Open( path, FileMode.Open ) ) ) {
+                        //SaveGameLength = br.BaseStream.Length;
+                        buffer = new byte[br.BaseStream.Length];
+                        int r = br.Read( buffer, 0, buffer.Length );
+                        return;
+                    }
+                } catch ( IOException ioex ) {
+                    counter++;
+                    m = ioex.Message;
+                    continue;
+
+                }
+
+                MessageBox.Show( m, "Error Reading Savegame file" );
 
             }
+            
 
         }
 
@@ -208,6 +225,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         private void btnShowChangesRealTime_Click ( object sender, EventArgs e ) {
             if ( C_Path == string.Empty ) {
                 new ShowChanges_RealTime( Path.Combine( MyDocument_Path, SaveGameFile_Path ), CurrentFileName ).Show();
+
             } else {
                 new ShowChanges_RealTime( C_Path, CurrentFileName ).Show();
 
@@ -216,6 +234,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private void saveGame1ToolStripMenuItem_Click ( object sender, EventArgs e ) {
             CurrentFileName = SaveGame_FileName1;
+            C_Path = string.Empty;
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 
@@ -232,6 +251,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private void saveGame2ToolStripMenuItem_Click ( object sender, EventArgs e ) {
             CurrentFileName = SaveGame_FileName2;
+            C_Path = string.Empty;
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 
@@ -248,6 +268,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
         private void saveGame3ToolStripMenuItem_Click ( object sender, EventArgs e ) {
             CurrentFileName = SaveGame_FileName3;
+            C_Path = string.Empty;
             string completePath = Path.Combine( MyDocument_Path, SaveGameFile_Path ) + "\\" + CurrentFileName;
             LoadBinaryFile( completePath, out this.buffer );
 

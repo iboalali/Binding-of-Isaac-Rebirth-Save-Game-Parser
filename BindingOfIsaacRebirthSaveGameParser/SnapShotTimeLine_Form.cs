@@ -13,28 +13,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BindingOfIsaacRebirthSaveGameParser {
 
-    public struct ExportData {
-        public static int Counter = 0;
-        public int Index;
-        public DateTime Date;
-        public List<int> Location;
-        public List<byte> PreviousByte;
-        public List<byte> CurrentByte;
-
-    }
-
     public partial class SnapShotTimeLine_Form : Form {
         private List<SaveGameSnapShot> saveGames;
-        private List<ExportData> saveGameChanges;
         private int index;
-        BackgroundWorker bw;
 
         public SnapShotTimeLine_Form ( List<SaveGameSnapShot> saveGames ) {
             InitializeComponent();
-
-            bw = new BackgroundWorker();
-            bw.DoWork += bw_DoWork;
-            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
 
             this.Icon = Form1.appIcon;
             this.index = 1;
@@ -45,82 +29,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
         public SnapShotTimeLine_Form () {
             InitializeComponent();
 
-            /*
-            MenuButton mb = new MenuButton();
-            mb.Location = new System.Drawing.Point( 165, 316 );
-            mb.Size = new System.Drawing.Size( 75, 23 );
-            mb.Name = "btnExportMenu";
-            mb.Text = "Export";
-            this.toolTip1.SetToolTip( mb, "Wait until the data is processed" );
-            mb.UseVisualStyleBackColor = true;
-            mb.Enabled = true;
-            mb.Anchor = ( ( System.Windows.Forms.AnchorStyles ) ( ( System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right ) ) );
-
-            ContextMenu menu = new ContextMenu();
-
-            //ToolStripMenuItem exportToBinaryFileToolStripMenuItem = new ToolStripMenuItem();
-            //exportToBinaryFileToolStripMenuItem.Name = "exportToBinaryFileToolStripMenuItem";
-            //exportToBinaryFileToolStripMenuItem.Size = new System.Drawing.Size( 207, 22 );
-            //exportToBinaryFileToolStripMenuItem.Text = "To File";
-            //exportToBinaryFileToolStripMenuItem.Click += new System.EventHandler( this.exportToBinaryFileToolStripMenuItem_Click );
-
-            //ToolStripMenuItem exportToTextFileToolStripMenuItem = new ToolStripMenuItem();
-            //exportToBinaryFileToolStripMenuItem.Name = "exportToTextFileToolStripMenuItem";
-            //exportToBinaryFileToolStripMenuItem.Size = new System.Drawing.Size( 207, 22 );
-            //exportToBinaryFileToolStripMenuItem.Text = "To Text File";
-            //exportToBinaryFileToolStripMenuItem.Click += new System.EventHandler( this.exportToTextFileToolStripMenuItem_Click );
-
-
-            menu.MenuItems.Add( "To File", new System.EventHandler( this.exportToBinaryFileToolStripMenuItem_Click ) );
-            menu.MenuItems.Add( "To Text File", new System.EventHandler( this.exportToTextFileToolStripMenuItem_Click ) );
-
-            mb.ContextMenu = menu;
-
-            this.Controls.Add( mb );
-             * */
-
-            //menu.Show( mb, new Point( 165, 340 ) );
-
             this.Icon = Form1.appIcon;
-        }
-
-        void bw_DoWork ( object sender, DoWorkEventArgs e ) {
-            ExportData ed;
-            ed.CurrentByte = new List<byte>();
-            ed.PreviousByte = new List<byte>();
-            ed.Location = new List<int>();
-
-            for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ ) {
-                if ( saveGames[index - 1].SnapShot[i] != saveGames[index].SnapShot[i] ) {
-                    ed = new ExportData();
-                    ed.Index = saveGames[index].Index;
-                    ed.PreviousByte.Add( saveGames[index - 1].SnapShot[i] );
-                    ed.CurrentByte.Add( saveGames[index].SnapShot[i] );
-                    ed.Location.Add( i );
-
-                    listView.Items.Add(
-                        new ListViewItem(
-                            new string[] {
-                                i.ToString("X4"),
-                                saveGames[index - 1].SnapShot[i].ToString("X2"),
-                                saveGames[index].SnapShot[i].ToString("X2"),
-                                                                
-                            }
-                        )
-                    );
-
-                    saveGameChanges.Add( ed );
-
-                }
-            }
-        }
-
-        void bw_RunWorkerCompleted ( object sender, RunWorkerCompletedEventArgs e ) {
-            //SetControlPropertyThreadSafe( exportToolStripMenuItem, "Enable", true );
-            //SetControlPropertyThreadSafe( toolTip1, "Active", false );
-            toolTip1.Active = false;
-            exportToolStripMenuItem.Enabled = true;
-
         }
 
         private void SnapShotTimeLine_Form_Load ( object sender, EventArgs e ) {
@@ -130,29 +39,38 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             columnHeaderLast.Text = "Value on " + saveGames[0].Date.ToString();
             columnHeaderCurrent.Text = "Value on " + saveGames[1].Date.ToString();
-            saveGameChanges = new List<ExportData>();
 
             for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ ) {
                 if ( saveGames[0].SnapShot[i] != saveGames[1].SnapShot[i] ) {
 
-                    listView.Items.Add(
-                        new ListViewItem(
-                            new string[] {
-                                i.ToString("X4"),
-                                saveGames[0].SnapShot[i].ToString("X2"),
-                                saveGames[1].SnapShot[i].ToString("X2"),
-                                                                
-                            }
-                        )
-                    );
+                    if ( StatLocation.ContainsLocation( i ) ) {
+                        listView.Items.Add(
+                            new ListViewItem(
+                                new string[] {
+                                    i.ToString( "X4" ) + " - " + ( i + StatLocation.GetNumberOfByteMinusOne( i ) ).ToString( "X4" ),
+                                    StatLocation.GetValue( saveGames[0].SnapShot, i ).ToString(),
+                                    StatLocation.GetValue( saveGames[1].SnapShot, i ).ToString(),
+                                    StatLocation.GetLocation_Name( i )                             
+                                }
+                            )
+                        );
 
+                    } else {
+                        listView.Items.Add(
+                            new ListViewItem(
+                                new string[] {
+                                    i.ToString("X4"),
+                                    saveGames[index - 1].SnapShot[i].ToString("X2"),
+                                    saveGames[index].SnapShot[i].ToString("X2"),
+                                }
+                            )
+                        );
 
+                    } // end if ( StatLocation.ContainsLocation( i ) ) else
+                } // end if ( saveGames[0].SnapShot[i] != saveGames[1].SnapShot[i] )
+            } // end for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ )
 
-                }
-            }
-
-
-        }
+        } // end private void SnapShotTimeLine_Form_Load ( object sender, EventArgs e )
 
         private void btnClose_Click ( object sender, EventArgs e ) {
             this.Close();
@@ -174,22 +92,34 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ ) {
                 if ( saveGames[index - 1].SnapShot[i] != saveGames[index].SnapShot[i] ) {
-                    listView.Items.Add(
-                        new ListViewItem(
-                            new string[] {
-                                i.ToString("X4"),
-                                saveGames[index - 1].SnapShot[i].ToString("X2"),
-                                saveGames[index].SnapShot[i].ToString("X2"),
-                                                                
-                            }
-                        )
-                    );
+                    if ( StatLocation.ContainsLocation( i ) ) {
+                        listView.Items.Add(
+                            new ListViewItem(
+                                new string[] {
+                                    i.ToString( "X4" ) + " - " + ( i + StatLocation.GetNumberOfByteMinusOne( i ) ).ToString( "X4" ),
+                                    StatLocation.GetValue( saveGames[index - 1].SnapShot, i ).ToString(),
+                                    StatLocation.GetValue( saveGames[index].SnapShot, i ).ToString(),
+                                    StatLocation.GetLocation_Name( i )                             
+                                }
+                            )
+                        );
 
-                }
-            }
+                    } else {
+                        listView.Items.Add(
+                            new ListViewItem(
+                                new string[] {
+                                    i.ToString("X4"),
+                                    saveGames[index - 1].SnapShot[i].ToString("X2"),
+                                    saveGames[index].SnapShot[i].ToString("X2"),
+                                }
+                            )
+                        );
 
+                    } // end if ( StatLocation.ContainsLocation( i ) ) else
+                } // end if ( saveGames[index - 1].SnapShot[i] != saveGames[index].SnapShot[i] )
+            } // end for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ )
 
-        }
+        } // end private void btnNext_Click ( object sender, EventArgs e )
 
         private void btnPrevious_Click ( object sender, EventArgs e ) {
             if ( --index < 1 ) {
@@ -197,6 +127,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                 ++index;
                 return;
             }
+
             listView.Items.Clear();
 
             columnHeaderLast.Text = "Value on " + saveGames[index - 1].Date.ToString();
@@ -204,22 +135,32 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ ) {
                 if ( saveGames[index - 1].SnapShot[i] != saveGames[index].SnapShot[i] ) {
+                    if ( StatLocation.ContainsLocation( i ) ) {
+                        listView.Items.Add(
+                            new ListViewItem(
+                                new string[] {
+                                    i.ToString( "X4" ) + " - " + ( i + StatLocation.GetNumberOfByteMinusOne( i ) ).ToString( "X4" ),
+                                    StatLocation.GetValue( saveGames[index - 1].SnapShot, i ).ToString(),
+                                    StatLocation.GetValue( saveGames[index].SnapShot, i ).ToString(),
+                                    StatLocation.GetLocation_Name( i )                             
+                                }
+                            )
+                        );
 
-                    listView.Items.Add(
-                        new ListViewItem(
-                            new string[] {
-                                i.ToString("X4"),
-                                saveGames[index - 1].SnapShot[i].ToString("X2"),
-                                saveGames[index].SnapShot[i].ToString("X2"),
-                                                                
-                            }
-                        )
-                    );
+                    } else {
+                        listView.Items.Add(
+                            new ListViewItem(
+                                new string[] {
+                                    i.ToString("X4"),
+                                    saveGames[index - 1].SnapShot[i].ToString("X2"),
+                                    saveGames[index].SnapShot[i].ToString("X2"),
+                                }
+                            )
+                        );
 
-
-
-                }
-            }
+                    } // end if ( StatLocation.ContainsLocation( i ) ) else
+                } // end if ( saveGames[index - 1].SnapShot[i] != saveGames[index].SnapShot[i] )
+            } // end for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ )
 
         }
 
@@ -247,7 +188,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
                     }
 
                 } catch ( IOException ioex ) {
-                    MessageBox.Show( ioex.Message, "Error While Writing" );
+                    MessageBox.Show( ioex.Message, "Error While Reading" );
 
                 }
 
@@ -259,7 +200,6 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             columnHeaderLast.Text = "Value on " + saveGames[0].Date.ToString();
             columnHeaderCurrent.Text = "Value on " + saveGames[1].Date.ToString();
-            saveGameChanges = new List<ExportData>();
 
             for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ ) {
                 if ( saveGames[0].SnapShot[i] != saveGames[1].SnapShot[i] ) {
@@ -288,7 +228,7 @@ namespace BindingOfIsaacRebirthSaveGameParser {
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "TBoIR Stats File (*.tboi)|*.tboi";
-            sfd.FileName = "tboir_" + GetSafeFilename( DateTime.Now.ToString() );
+            sfd.FileName = "tboir_" + GetSafeFilename( saveGames.First().Date.ToString() );
 
             if ( sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
                 try {
@@ -313,27 +253,30 @@ namespace BindingOfIsaacRebirthSaveGameParser {
             // export to text file here
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Log File (*.log)|*.log";
-            sfd.FileName = "TBoIR_" + DateTime.Now.ToString() + ".log";
+            sfd.FileName = "tboir_" + GetSafeFilename( saveGames.First().Date.ToString() );
 
             if ( sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
                 using ( StreamWriter sw = new StreamWriter( sfd.FileName ) ) {
-                    foreach ( var item in saveGameChanges ) {
-                        sw.WriteLine( item.Index.ToString( "D6" ) + "\t" + item.Date.ToString() );
+                    for ( int index = 1; index < saveGames.Count; index++ ) {
+                        sw.WriteLine( saveGames[index].Index.ToString( "D6" ) + ", " + saveGames[index].Date.ToString() );
 
-                        for ( int i = 0; i < item.CurrentByte.Count; i++ ) {
-                            sw.WriteLine(
-                                item.Location.ElementAt( i ).ToString( "X4" ) + "\t"
-                                + item.PreviousByte.ElementAt( i ).ToString( "D3" ) + "\t"
-                                + item.CurrentByte.ElementAt( i ).ToString( "D3" )
-                            );
+                        for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ ) {
+                            if ( saveGames[index - 1].SnapShot[i] != saveGames[index].SnapShot[i] ) {
+                                sw.WriteLine(
+                                     i.ToString( "X4" ) + "\t"
+                                     + saveGames[index - 1].SnapShot[i].ToString( "X2" ) + "\t"
+                                     + saveGames[index].SnapShot[i].ToString( "X2" ) + "\t"
+                                     + StatLocation.GetLocation_Name( i )
+                                );
 
-                        }
-
+                            } // end if ( saveGames[index - 1].SnapShot[i] != saveGames[index].SnapShot[i] )
+                        } // end for ( int i = 0; i < saveGames.First().SnapShot.Length; i++ )
+                        sw.Write( "------------------------------------------" );
                         sw.Write( Environment.NewLine );
 
-                    }
+                    } // end for ( int index = 0; index < saveGames.Count; index++ )
+                } // end using ( StreamWriter sw = new StreamWriter( ( string ) e.Argument ) )
 
-                }
             }
 
         }
